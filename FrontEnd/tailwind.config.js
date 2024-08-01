@@ -18,7 +18,11 @@ export default {
         '0%': { transform: 'translateX(0)' },
         '100%': { transform: 'translateX(calc(-250px * 7))' },
       },
-    },                   
+    },     
+    backgroundImage:{
+      'fav-color': 'radial-gradient(circle, #5d6d7e, #bfc9ca)',
+      'f-color':'linear-gradient(45deg,#212f3d,#5d6d7e)'
+    }              
   },
   plugins: [],
 }
