@@ -12,7 +12,12 @@ const SignUp = () => {
 
   const [profilePreview, setProfilePreview] = useState(null);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   const handleChange = (e) => {
+    e.preventDefault();
     const { name, value, files } = e.target;
     if (name === "profile") {
       const file = files[0];
@@ -98,7 +103,7 @@ const SignUp = () => {
                 />
               </label>
             </div>
-            <button className='bg-fav-color text-white py-2 px-4 rounded-md border border-transparent hover:border-white hover:border-2 transition duration-300 ease-in-out w-full'>
+            <button onClick={handleSubmit} className='bg-fav-color text-white py-2 px-4 rounded-md border border-transparent hover:border-white hover:border-2 transition duration-300 ease-in-out w-full'>
               Sign Up
             </button>
           </div>
