@@ -41,7 +41,7 @@ const Home = () => {
             backgroundImage: `url('https://hips.hearstapps.com/hmg-prod/images/alpe-di-siusi-sunrise-with-sassolungo-or-langkofel-royalty-free-image-1623254127.jpg')`
           }}
         >
-          <div className="absolute inset-0 bg-black opacity-50"></div>
+          <div className="absolute inset-0 bg-black opacity-55"></div>
           <div className="relative p-8 rounded-lg text-center z-10">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               Find Your Perfect Room with Roomly
