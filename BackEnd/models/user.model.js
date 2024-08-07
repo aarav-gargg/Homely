@@ -16,10 +16,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    profileImage: {
-        type: String,
-        default:"",
-    },
+    // profileImage: {
+    //     type: String,
+    //     default:"",
+    // },
     tripList:{
         type: Array,
         default:[],

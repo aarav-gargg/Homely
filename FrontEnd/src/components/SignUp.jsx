@@ -8,23 +8,14 @@ const SignUp = () => {
     email: "",
     password: "",
     conpassword: "",
-    profile: null,
   });
   const [profilePreview, setProfilePreview] = useState(null);
   const navigate=useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
     try {
-      const register=new FormData();
-      for(var key in SignupData){
-        register.append(key,SignupData[key]);
-      }
-      const response=await axios.post("http://localhost:3000/api/auth/Register",register,{
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }});
+      const response=await axios.post("http://localhost:3000/api/auth/Register",SignupData);
       if(response.status===200){
         navigate("/Login");
       }
@@ -35,20 +26,11 @@ const SignUp = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "profile") {
-      const file = files[0];
-      setSignupData({
-        ...SignupData,
-        profile: file,
-      });
-      setProfilePreview(URL.createObjectURL(file));
-    } else {
+    const { name, value} = e.target;
       setSignupData({
         ...SignupData,
         [name.toLowerCase()]: value,
       });
-    }
   };
 
   const[passwordMatch,setpasswordMatch]=useState(true);
@@ -106,32 +88,6 @@ const SignUp = () => {
               Your Passwords do not match
             </p>
             }
-  
-            <div className="w-full flex justify-center">
-              <label
-                htmlFor='profile'
-                className={`relative bg-gray-200 border-2 border-dashed border-gray-300 rounded-md py-2 px-4 w-full text-center cursor-pointer hover:bg-gray-300 ${profilePreview ? 'h-32' : ''}`}
-              >
-                {profilePreview ? (
-                  <div
-                    className='absolute inset-0 bg-cover bg-center rounded-md'
-                    style={{
-                      backgroundImage: `url(${profilePreview})`,
-                      height: '100%',
-                      width: '100%',
-                    }}
-                  />
-                ) : 'Upload Profile Picture'}
-                <input
-                  type="file"
-                  id='profile'
-                  name='profile'
-                  accept='image/*'
-                  onChange={handleChange}
-                  className='hidden'
-                />
-              </label>
-            </div>
             <button onClick={handleSubmit} disabled={!passwordMatch} className='bg-fav-color text-white py-2 px-4 rounded-md border border-transparent hover:border-white hover:border-2 transition duration-300 ease-in-out w-full disabled:cursor-not-allowed'>
               Sign Up
             </button>
