@@ -21,6 +21,17 @@ app.use(express.static("public"))
 
 app.use("/api/auth",authRoutes);
 
+app.use((error,req,res,next)=>{
+    const statusCode=error.statusCode || 500;
+    const message=error.message || "Internl server error";
+
+    return res.status(statusCode).json({
+        success:false,
+        statusCode,
+        message
+    })
+})
+
 app.listen(3000, () => {
     console.log("server is running on port 3000");
 });

@@ -1,6 +1,7 @@
 import User from "../models/user.model.js"
 import bcryptjs from "bcryptjs"
-import path from "path"
+import jwt from "jsonwebtoken"
+import { errorHandler } from "../utils/error.js";
 
 export const register = async (req, res, next) => {
     try {
@@ -21,7 +22,7 @@ export const register = async (req, res, next) => {
 
         const exist = await User.findOne({ email });
         if (exist) {
-            return res.status(409).json({ message: "User Already exists" });
+            return next(errorHandler(409,"User Already Exists!"))
         }
 
         const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -38,7 +39,36 @@ export const register = async (req, res, next) => {
             user: newUser,
         });
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Server error" });
+        return next(errorHandler(404,"User Not Found"))
+    }
+}
+
+export const login= async(req,res,next)=>{
+    try {
+        const {email,password}=req.body;
+        const exist = await User.findOne({ email });
+
+        if(!exist){
+            return next(errorHandler(409,"User Does Not Exist!"))
+        }
+        else{
+            const validPass=bcryptjs.compareSync(password,exist.password);
+
+        if(!validPass){
+            return next(errorHandler(409,"Password Invalid!"))
+        }
+
+        else{
+            const token=jwt.sign({id:exist._id},process.env.JWT_SECRET);
+
+        res.status(200).json({
+            message:"login success",
+            token
+        });
+        }
+        }
+
+    } catch (error) {
+        return next(errorHandler(404,"User Not Found"))
     }
 }

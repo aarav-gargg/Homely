@@ -1,7 +1,28 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate  } from 'react-router-dom';
+import axios from "axios";
 
 const Login = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const data = {
+                email: email,
+                password: password
+            }
+            const response = await axios.post("http://localhost:3000/api/auth/Login", data);
+            if (response.status === 200) {
+                alert("LOGIN SUCCESSFUL..LOGIN AND CONTINUE")
+                navigate("/");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <div className='bg-fav-color h-screen w-screen flex overflow-hidden '>
             <div className='text-white text-center w-full flex flex-col h-full overflow-hidden items-center my-11'>
@@ -13,15 +34,21 @@ const Login = () => {
                             type="email"
                             placeholder='Enter your Email'
                             required
+                            name='email'
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             className='w-full bg-transparent border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black-100 transition duration-300'
                         />
                         <input
                             type="password"
                             placeholder='Enter your Password'
                             required
+                            name='password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             className='w-full bg-transparent border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black-100 transition duration-300'
                         />
-                        <button className='bg-fav-color text-white py-2 px-4 rounded-md  border border-transparent hover:border-white hover:border-2 transition duration-300 ease-in-out w-full'>
+                        <button onClick={handleSubmit} className='bg-fav-color text-white py-2 px-4 rounded-md  border border-transparent hover:border-white hover:border-2 transition duration-300 ease-in-out w-full'>
                             Login
                         </button>
                     </div>

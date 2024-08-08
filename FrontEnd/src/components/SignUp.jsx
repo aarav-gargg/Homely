@@ -17,11 +17,11 @@ const SignUp = () => {
     try {
       const response=await axios.post("http://localhost:3000/api/auth/Register",SignupData);
       if(response.status===200){
+        alert("SIGNUP SUCCESSFUL..LOGIN AND CONTINUE")
         navigate("/Login");
       }
     } catch (error) {
       console.log(error);
-      
     }
   };
 
