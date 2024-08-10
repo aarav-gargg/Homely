@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate  } from 'react-router-dom';
 import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { setLogin } from '../redux/slice/userSlice';
 
 const Login = () => {
+    const dispatch=useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -15,7 +18,12 @@ const Login = () => {
             }
             const response = await axios.post("http://localhost:3000/api/auth/Login", data);
             if (response.status === 200) {
-                alert("LOGIN SUCCESSFUL..LOGIN AND CONTINUE")
+                const {user,token}=response.data;
+                dispatch(setLogin({
+                    user:user,
+                    token:token,
+                })
+            )
                 navigate("/");
             }
         } catch (error) {

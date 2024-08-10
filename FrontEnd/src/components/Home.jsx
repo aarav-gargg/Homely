@@ -62,7 +62,7 @@ const Home = () => {
           <h1 className="text-4xl font-bold mb-4 font-yusei mx-10 my-5 text-white">Top Categories</h1>
           <div className="w-full p-8">
             <div className="h-[200px] m-auto overflow-hidden relative w-auto my-5">
-              <ul className="flex w-[calc(250px*14)] animate-scroll justify-center items-center gap-5">
+            <ul className="flex w-[calc(250px*14)] animate-scroll justify-center items-center gap-5">
                 {items.concat(items).map((item, index) => (
                   <li
                     key={index}

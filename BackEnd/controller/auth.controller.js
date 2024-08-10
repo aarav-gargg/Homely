@@ -60,10 +60,12 @@ export const login= async(req,res,next)=>{
 
         else{
             const token=jwt.sign({id:exist._id},process.env.JWT_SECRET);
+            const user=exist._doc;
 
         res.status(200).json({
             message:"login success",
-            token
+            token,
+            user
         });
         }
         }
