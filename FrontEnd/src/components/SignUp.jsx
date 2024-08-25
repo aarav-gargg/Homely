@@ -9,7 +9,6 @@ const SignUp = () => {
     password: "",
     conpassword: "",
   });
-  const [profilePreview, setProfilePreview] = useState(null);
   const navigate=useNavigate();
 
   const handleSubmit = async (e) => {
