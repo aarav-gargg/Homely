@@ -15,7 +15,7 @@ const Navbar = () => {
   console.log(user);
 
   return (
-    <div  className="sticky top-0 z-50 bg-f-color">
+    <div className="sticky top-0 z-50 bg-f-color over">
       <nav className="bg-f-color sticky top-0 z-50">
         <div className="mx-auto max-w-7xl px-2 sm:px-10 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
@@ -69,7 +69,7 @@ const Navbar = () => {
                   to="/"
                   className="rounded-md bg-gray-900 px-3 py-2 text-md font-large text-white"
                 >
-                  Roomly
+                  Homely
                 </NavLink>
                 <NavLink
                   to="/"
@@ -163,28 +163,78 @@ const Navbar = () => {
               </div>
             </div> */}
             <div className="flex items-center gap-5">
-  {user.user!=null && (
-    <NavLink
-      to="createListing"
-      className="rounded-md px-3 py-2 text-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-    >
-      Host
-    </NavLink>
-  )}
-  {user.user==null && (
-    <NavLink
-      to="/Login"
-      className="rounded-md px-3 py-2 text-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-    >
-      Login/SignUp
-    </NavLink>
-  )}
-  <button className=' hover:bg-gray-700 hover:text-white py-2 px-3 rounded-xl' onClick={toggleDropdown}>
-    {user.user!=null && 
-    <FaUserCircle size={32}/>
-    }
-  </button>
-</div>
+              {user.user != null && (
+                <NavLink
+                  to="createListing"
+                  className="rounded-md px-3 py-2 text-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  Host
+                </NavLink>
+              )}
+              {user.user == null && (
+                <NavLink
+                  to="/Login"
+                  className="rounded-md px-3 py-2 text-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                >
+                  Login/SignUp
+                </NavLink>
+              )}
+              <div className="relative inline-block text-left">
+                <button className=' hover:bg-gray-700 hover:text-white py-2 px-3 rounded-xl relative ' onClick={toggleDropdown}>
+                  {user.user != null &&
+                    <FaUserCircle size={32} />
+                  }
+                </button>
+                {isDropdownOpen && (
+                  <div
+                    className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-white/90 backdrop-blur-2xl shadow-lg ring-1 ring-black ring-opacity-25 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="user-menu-button"
+                  >
+                    <NavLink
+                      to="#"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-300"
+                      role="menuitem"
+                    >
+                      {user.user.name}
+                    </NavLink>
+                    <NavLink
+                      to={`/${user.user._id}/trips`}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-300"
+                      role="menuitem">
+                        Trip List
+                    </NavLink>
+                    <NavLink
+                      to={`/${user.user._id}/wishList`}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-300"
+                      role="menuitem">
+                        Wish List
+                    </NavLink>
+                    <NavLink
+                      to={`/${user.user._id}/properties`}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-300"
+                      role="menuitem">
+                        Property List
+                    </NavLink>
+                    <NavLink
+                      to={`/${user.user._id}/reservations`}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-300"
+                      role="menuitem">
+                        Reservations List
+                    </NavLink>
+                    <NavLink
+                      to="#"
+                      className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-300"
+                      role="menuitem"
+                    >
+                      Sign out
+                    </NavLink>
+                  </div>
+                )
+                }
+              </div>
+            </div>
 
           </div>
         </div>

@@ -44,11 +44,11 @@ const Home = () => {
           <div className="absolute inset-0 bg-black opacity-55"></div>
           <div className="relative p-8 rounded-lg text-center z-10">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Find Your Perfect Room with Roomly
+              Find Your Perfect Room with Homely
             </h1>
             <p className="text-base md:text-lg text-white mb-6">
               Discover a wide range of affordable and cozy rooms tailored to your needs.
-              Whether you’re looking for a short-term stay or a long-term home, Roomly has you covered.
+              Whether you’re looking for a short-term stay or a long-term home, Homely has you covered.
             </p>
             <a
               href="/search"
