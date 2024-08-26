@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 // import { a } from 'react-router-dom';
+import { FaSearchLocation } from "react-icons/fa";
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -7,10 +11,12 @@ const Navbar = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+  const user = useSelector((state) => state.user);
+  console.log(user);
 
   return (
-    <div>
-      <nav className="bg-f-color">
+    <div  className="sticky top-0 z-50 bg-f-color">
+      <nav className="bg-f-color sticky top-0 z-50">
         <div className="mx-auto max-w-7xl px-2 sm:px-10 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -53,46 +59,41 @@ const Navbar = () => {
               </button>
             </div>
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-  <div className="flex flex-shrink-0 items-center">
-    <a to="/">
-      <img
-        className="h-12 w-auto"
-        src="./Logo.jpg"
-        
-      />
-    </a>
-  </div>
-  <div className="hidden sm:ml-6 sm:block">
-    <div className="flex space-x-4">
-      <a
-        href="/"
-        className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-        // aria-current="page"
-      >
-        Roomly
-      </a>
-      <a
-        href="/"
-        className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-      >
-        Team
-      </a>
-      <a
-        href="/"
-        className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-      >
-        Projects
-      </a>
-      <a
-        href="/"
-        className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-      >
-        Calendar
-      </a>
-    </div>
-  </div>
+              <div className="flex flex-shrink-0 items-center">
+                <NavLink to="/">
+                  <img className="h-12 w-auto" src="./Logo.jpg" alt="Logo" />
+                </NavLink>
+              </div>
+              <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
+                <NavLink
+                  to="/"
+                  className="rounded-md bg-gray-900 px-3 py-2 text-md font-large text-white"
+                >
+                  Roomly
+                </NavLink>
+                <NavLink
+                  to="/"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
+                >
+                  Team
+                </NavLink>
+                <NavLink
+                  to="/"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
+                >
+                  Projects
+                </NavLink>
+                <div className="relative flex items-center">
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="rounded-lg bg-gray-900 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  />
+                  <FaSearchLocation className="absolute right-3 text-gray-400" />
+                </div>
+              </div>
             </div>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            {/* <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <button
                 type="button"
                 className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -129,7 +130,7 @@ const Navbar = () => {
                     <img
                       className="h-8 w-8 rounded-full"
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
+                      alt="User"
                     />
                   </button>
                 </div>
@@ -147,13 +148,9 @@ const Navbar = () => {
                     >
                       Your Profile
                     </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700"
-                      role="menuitem"
-                    >
-                      Settings
-                    </a>
+                   <Link>
+
+                   </Link>
                     <a
                       href="#"
                       className="block px-4 py-2 text-sm text-gray-700"
@@ -164,36 +161,31 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="sm:hidden" id="mobile-menu">
-          <div className="space-y-1 px-2 pb-3 pt-2">
-            <a
-              href="#"
-              className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-              aria-current="page"
-            >
-              Dashboard
-            </a>
-            <a
-              href="#"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-            >
-              Team
-            </a>
-            <a
-              href="#"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-            >
-              Projects
-            </a>
-            <a
-              href="#"
-              className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-            >
-              Calendar
-            </a>
+            </div> */}
+            <div className="flex items-center gap-5">
+  {user.user!=null && (
+    <NavLink
+      to="createListing"
+      className="rounded-md px-3 py-2 text-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+    >
+      Host
+    </NavLink>
+  )}
+  {user.user==null && (
+    <NavLink
+      to="/Login"
+      className="rounded-md px-3 py-2 text-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+    >
+      Login/SignUp
+    </NavLink>
+  )}
+  <button className=' hover:bg-gray-700 hover:text-white py-2 px-3 rounded-xl' onClick={toggleDropdown}>
+    {user.user!=null && 
+    <FaUserCircle size={32}/>
+    }
+  </button>
+</div>
+
           </div>
         </div>
       </nav>
@@ -201,5 +193,6 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
 
+
+export default Navbar;
