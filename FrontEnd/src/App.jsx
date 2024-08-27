@@ -5,6 +5,7 @@ import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
+import Host from './components/Host';
 
 function AppLayout() {
   return (
@@ -18,10 +19,11 @@ function AppLayout() {
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="" element={<AppLayout />}>
+      <Route  path="" element={<AppLayout />}>
         <Route path="" element={<Home />} />
         <Route path="/Register" element={<SignUp />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/createListing" element={<Host/>}/>
       </Route>
     )
   );
