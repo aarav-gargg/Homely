@@ -3,24 +3,25 @@ import { MdOutlineBedroomParent } from "react-icons/md";
 import { FaPeopleRoof } from "react-icons/fa6";
 
 const types = [
-    {
-        name: "Entire Property",
-        description:
-          "Experience complete privacy with exclusive access to the whole property, making it your personal retreat.",
-      icon: <BsFillHouseFill />,
-    },
-    {
-        name: "Private Room",
-        description:
-          "Relax in your own private sanctuary, with the convenience of shared amenities in common areas.",
-      icon: <MdOutlineBedroomParent/>,
-    },
-    {
-        name: "Shared Space",
-        description:
-          "Embrace the communal experience by staying in a shared space, perfect for socializing and meeting new people.",
-      icon: <FaPeopleRoof />,
-    },
-  ]
+  {
+    name: "Entire Property",
+    description:
+      "Offer your entire property for rent, giving guests exclusive access to all the spaces and amenities.",
+    icon: BsFillHouseFill, 
+  },
+  {
+    name: "Private Room",
+    description:
+      "Rent out a private room within your property while sharing common areas like the kitchen and living room with guests.",
+    icon: MdOutlineBedroomParent, 
+  },
+  {
+    name: "Shared Space",
+    description:
+      "Offer a shared space where guests can stay in a communal environment.",
+    icon: FaPeopleRoof,
+  },
+];
 
-  export default types;
+export default types;
+
