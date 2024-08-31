@@ -4,6 +4,7 @@ import types from "../Data/types";
 import facilities from '../Data/facilities.jsx';
 import { IoInformationCircle } from "react-icons/io5";
 import { FaPlus, FaMinus } from 'react-icons/fa';
+import { MdAddToPhotos } from "react-icons/md"
 
 const Host = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(null);
@@ -41,7 +42,8 @@ const Host = () => {
   useEffect(() => {
     console.log("CATEGORY IS : ", category);
     console.log("TYPE IS : ", type);
-  }, [category, type])
+    console.log("SELECYED FACILITIES ARE: ", selectedFacilities)
+  }, [category, type, selectedFacilities])
 
   return (
     <>
@@ -273,7 +275,6 @@ const Host = () => {
             <div className="w-4/5 m-auto p-2">
               <h2 className="font-roboto text-2xl text-black my-3">Facilities</h2>
               <div className="w-4/5 m-auto p-2">
-                <h2 className="font-roboto text-2xl text-black my-3">Facilities</h2>
                 <div className="flex flex-wrap gap-4">
                   {facilities.map((facility) => (
                     <div
@@ -289,14 +290,12 @@ const Host = () => {
                     </div>
                   ))}
                 </div>
-                <div className="mt-4">
-                  <h3 className="font-roboto text-xl text-black mb-2">Selected Facilities:</h3>
-                  <ul>
-                    {selectedFacilities.map((name) => (
-                      <li key={name} className="text-lg text-gray-700">{name}</li>
-                    ))}
-                  </ul>
-                </div>
+              </div>
+            </div>
+            <div className="w-4/5 m-auto p-2">
+              <h2 className="font-roboto text-2xl text-black my-3">Add photos of the property</h2>
+              <div className='w-1/6 h-auto  p-11 border border-gray-300 rounded-md shadow-md flex align-middle justify-center'>
+              <MdAddToPhotos className="text-4xl text-gray-700 cursor-pointer"/>
               </div>
             </div>
           </div>
