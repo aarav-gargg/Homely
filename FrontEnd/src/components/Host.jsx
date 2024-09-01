@@ -3,8 +3,9 @@ import items from '../Data/categories';
 import types from "../Data/types";
 import facilities from '../Data/facilities.jsx';
 import { IoInformationCircle } from "react-icons/io5";
-import { FaPlus, FaMinus } from 'react-icons/fa';
-import { MdAddToPhotos } from "react-icons/md"
+import { FaPlus, FaMinus, FaImages, FaTrashAlt } from 'react-icons/fa';
+import { MdDelete } from "react-icons/md";
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Host = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(null);
@@ -15,6 +16,7 @@ const Host = () => {
   const [beds, setBeds] = useState(1);
   const [bathrooms, setBathrooms] = useState(1);
   const [selectedFacilities, setSelectedFacilities] = useState([]);
+  const [photos, setPhotos] = useState([]);
 
   const handleFacilityToggle = (facilityName) => {
     setSelectedFacilities((prevSelected) =>
@@ -38,6 +40,29 @@ const Host = () => {
   const handleCategoryClick = (name) => {
     setCategory(name);
   }
+
+  const handleUploadPhotos = (e) => {
+    const newPhotos = e.target.files;
+
+    setPhotos((prev) => [...prev, ...newPhotos])
+  }
+
+  const handleDragPhoto = (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(photos)
+
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setPhotos(items);
+  }
+
+  const handleDeletePhoto = (index) => {
+    const updatedPhotos = [...photos];
+    updatedPhotos.splice(index, 1);
+    setPhotos(updatedPhotos);
+  };
+
 
   useEffect(() => {
     console.log("CATEGORY IS : ", category);
@@ -279,7 +304,7 @@ const Host = () => {
                   {facilities.map((facility) => (
                     <div
                       key={facility.name}
-                      className={`flex items-center gap-2 p-2 border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-blue-100 border-blue-400 ${selectedFacilities.includes(facility.name)
+                      className={`flex items-center gap-2 p-2 border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-blue-100 ${selectedFacilities.includes(facility.name)
                         ? 'bg-blue-100 border-blue-400'
                         : ''
                         }`}
@@ -294,10 +319,130 @@ const Host = () => {
             </div>
             <div className="w-4/5 m-auto p-2">
               <h2 className="font-roboto text-2xl text-black my-3">Add photos of the property</h2>
-              <div className='w-1/6 h-auto  p-11 border border-gray-300 rounded-md shadow-md flex align-middle justify-center'>
-              <MdAddToPhotos className="text-4xl text-gray-700 cursor-pointer"/>
+              <DragDropContext onDragEnd={handleDragPhoto}>
+                <Droppable droppableId='photos' direction='horizontal'>
+                  {(provided) => (
+                    <div
+                      className='flex flex-wrap justify-center gap-4 border-2 rounded-3xl'
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {photos.length < 1 && (
+                        <>
+                          <input
+                            id="image"
+                            type="file"
+                            className='hidden'
+                            accept='image/*'
+                            required
+                            onChange={handleUploadPhotos}
+                          />
+                          <label
+                            htmlFor="image"
+                            className='flex flex-col justify-center items-center cursor-pointer border-3 rounded-md border-gray-900 py-6'
+                          >
+                            <div className='text-6xl'>
+                              <FaImages />
+                            </div>
+                            <p className='font-semibold text-center'>Upload from your device</p>
+                          </label>
+                        </>
+                      )}
+
+                      {photos.length >= 1 && (
+                        <>
+                          {photos.map((photo, index) => (
+                            <Draggable key={index} draggableId={index.toString()} index={index}>
+                              {(provided) => (
+                                <div
+                                  className='relative w-56 h-64 rounded-md overflow-hidden py-5'
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  ref={provided.innerRef}
+                                >
+                                  <img
+                                    src={URL.createObjectURL(photo)}
+                                    alt={`Uploaded ${index}`}
+                                    className='object-cover w-full h-full'
+                                  />
+                                  <button
+                                    className='absolute top-6 right-2 text-white bg-black hover:bg-red-600 p-2 rounded-full'
+                                    onClick={() => handleDeletePhoto(index)}
+                                  >
+                                    <FaTrashAlt />
+                                  </button>
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+                          <input
+                            id="image"
+                            required
+                            type="file"
+                            className='hidden'
+                            accept='image/*'
+                            onChange={handleUploadPhotos}
+                          />
+                          <label
+                            htmlFor="image"
+                            className='flex flex-col justify-center items-center cursor-pointer border-3 rounded-md border-gray-900 py-6'
+                          >
+                            <div className='text-6xl'>
+                              <FaImages />
+                            </div>
+                            <p className='font-semibold text-center'>Upload from your device</p>
+                          </label>
+                        </>
+                      )}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
+
+            <div className='w-4/5 m-auto p-4 '>
+              <h2 className="font-roboto text-3xl text-gray-800 my-4">Description of the Place</h2>
+
+              <div className="mb-4">
+                <label htmlFor="title" className="block font-roboto text-lg  mb-2">Name</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  placeholder="Name of the Place"
+                  className="p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
+                  required
+                />
+              </div>
+
+              <div className="mb-4">
+                <p className="font-roboto text-lg  mb-2">Describe your Place</p>
+                <textarea
+                  name="description"
+                  id="description"
+                  required
+                  placeholder="Describe your Place"
+                  className="p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full h-32 resize-none"
+                />
+              </div>
+
+              <div className="mb-4">
+                <p className="font-roboto text-lg  mb-2">Price</p>
+                <div className="flex items-center">
+                  <span className=" text-xl mr-2">Rs.</span>
+                  <input
+                    type="number"
+                    placeholder='10000'
+                    name='price'
+                    required
+                    className="p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
+                  />
+                </div>
               </div>
             </div>
+
+
+
           </div>
 
         </form>
