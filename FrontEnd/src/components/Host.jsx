@@ -4,7 +4,6 @@ import types from "../Data/types";
 import facilities from '../Data/facilities.jsx';
 import { IoInformationCircle } from "react-icons/io5";
 import { FaPlus, FaMinus, FaImages, FaTrashAlt } from 'react-icons/fa';
-import { MdDelete } from "react-icons/md";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Host = () => {
@@ -17,6 +16,23 @@ const Host = () => {
   const [bathrooms, setBathrooms] = useState(1);
   const [selectedFacilities, setSelectedFacilities] = useState([]);
   const [photos, setPhotos] = useState([]);
+  const [propaddress, setPropAddress] = useState({
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
+  });
+
+  const handleAddress = (e) => {
+    const { name, value } = e.target;
+
+    setPropAddress((prev) => (
+      {
+        ...prev, [name]: value,
+      }
+    ))
+  }
 
   const handleFacilityToggle = (facilityName) => {
     setSelectedFacilities((prevSelected) =>
@@ -63,21 +79,40 @@ const Host = () => {
     setPhotos(updatedPhotos);
   };
 
+  const [placeDescription , setPlaceDescription] = useState({
+    title: "",
+    description: "",
+    price : 0,
+  })
+
+  const handleDescription = (e)=>{
+    const {name , value} = e.target;
+    setPlaceDescription((prev) => (
+      {
+        ...prev , [name] : value,
+      }
+    ))
+  }
+
 
   useEffect(() => {
     console.log("CATEGORY IS : ", category);
     console.log("TYPE IS : ", type);
     console.log("SELECYED FACILITIES ARE: ", selectedFacilities)
-  }, [category, type, selectedFacilities])
+    console.log("ADRRESS DETAILS ARE: ",propaddress)
+    console.log("THE PHOTOS OF THE PLACE ARE: ",photos)
+    console.log("THE  DESCRIPTION OF THE PLACE IS: ", placeDescription)
+  }, [category, type, selectedFacilities,propaddress,placeDescription,photos])
 
   return (
     <>
       <div>
-        <h1 className="text-4xl md:text-5xl font-bold text-black mb-4 mx-10 my-7 font-roboto">Host a Property</h1>
+        <h1 className="text-4xl md:text-5xl font-bold text-black mb-4 mx-11 my-7 px-11 font-roboto">Host a Property</h1>
         <form>
           <div className="w-4/5 m-auto my-9 bg-slate-500 rounded-2xl p-3">
             <h2 className="font-roboto text-2xl text-white">Basic Details of the Place</h2>
             <hr className="text-black dark:text-gray-400 my-2" />
+            {/* CATEGORY*/}
             <div className="w-4/5 m-auto p-2">
               <h2 className="font-roboto text-2xl text-black my-3">Select your category</h2>
               <ul className="flex flex-wrap justify-center items-center gap-5">
@@ -96,6 +131,7 @@ const Host = () => {
                 ))}
               </ul>
             </div>
+            {/* TYPE */}
             <div className="w-4/5 m-auto p-2">
               <h2 className="font-roboto text-2xl text-black my-3">Select the type of your Property</h2>
               <ul className="flex flex-row justify-center items-center gap-5">
@@ -136,6 +172,7 @@ const Host = () => {
                 ))}
               </ul>
             </div>
+            {/* ADDRESS*/}
             <div className="w-4/5 m-auto p-2">
               <h2 className="font-roboto text-2xl text-black my-3">Where is the Property Located?</h2>
 
@@ -144,6 +181,8 @@ const Host = () => {
                 <input
                   type="text"
                   id="address"
+                  onChange={handleAddress}
+                  value={propaddress.address}
                   name="address"
                   placeholder="123 Block RZ"
                   className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
@@ -157,6 +196,8 @@ const Host = () => {
                   <input
                     type="text"
                     id="city"
+                    onChange={handleAddress}
+                    value={propaddress.city}
                     name="city"
                     placeholder="Mumbai"
                     className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
@@ -170,6 +211,8 @@ const Host = () => {
                     type="text"
                     id="state"
                     name="state"
+                    onChange={handleAddress}
+                    value={propaddress.state}
                     placeholder="Maharashtra"
                     className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
                     required
@@ -181,6 +224,8 @@ const Host = () => {
                   <input
                     type="text"
                     id="zip"
+                    onChange={handleAddress}
+                    value={propaddress.zip}
                     name="zip"
                     placeholder="10001"
                     className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
@@ -194,6 +239,8 @@ const Host = () => {
                     type="text"
                     id="country"
                     name="country"
+                    onChange={handleAddress}
+                    value={propaddress.country}
                     placeholder="India"
                     className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
                     required
@@ -201,6 +248,7 @@ const Host = () => {
                 </div>
               </div>
             </div>
+            {/* GUESTS BATHROOMS BEDROOMS*/}
             <div className="w-4/5 m-auto  bg-slate-500 rounded-2xl p-3">
               <h2 className="font-roboto text-2xl text-black my-3">Additional Details</h2>
               <div className="flex flex-wrap justify-between gap-5">
@@ -290,13 +338,12 @@ const Host = () => {
                 </div>
               </div>
             </div>
-
-
           </div>
-
+          {/* ADDITIONAL DETAILS */}
           <div className="w-4/5 m-auto my-9 bg-slate-500 rounded-2xl p-3">
             <h2 className="font-roboto text-2xl text-white">Additional Details of the Place</h2>
             <hr className="text-black dark:text-gray-400 my-2" />
+            {/* FACILITIES*/}
             <div className="w-4/5 m-auto p-2">
               <h2 className="font-roboto text-2xl text-black my-3">Facilities</h2>
               <div className="w-4/5 m-auto p-2">
@@ -317,6 +364,7 @@ const Host = () => {
                 </div>
               </div>
             </div>
+            {/* PHOTOS */}
             <div className="w-4/5 m-auto p-2">
               <h2 className="font-roboto text-2xl text-black my-3">Add photos of the property</h2>
               <DragDropContext onDragEnd={handleDragPhoto}>
@@ -399,16 +447,17 @@ const Host = () => {
                 </Droppable>
               </DragDropContext>
             </div>
-
+            {/* DESCRIPTION */}
             <div className='w-4/5 m-auto p-4 '>
               <h2 className="font-roboto text-3xl text-gray-800 my-4">Description of the Place</h2>
-
               <div className="mb-4">
                 <label htmlFor="title" className="block font-roboto text-lg  mb-2">Name</label>
                 <input
                   type="text"
                   id="title"
                   name="title"
+                  value={placeDescription.title}
+                  onChange={handleDescription}
                   placeholder="Name of the Place"
                   className="p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
                   required
@@ -420,6 +469,8 @@ const Host = () => {
                 <textarea
                   name="description"
                   id="description"
+                  value={placeDescription.description}
+                  onChange={handleDescription}
                   required
                   placeholder="Describe your Place"
                   className="p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full h-32 resize-none"
@@ -434,15 +485,18 @@ const Host = () => {
                     type="number"
                     placeholder='10000'
                     name='price'
+                    value={placeDescription.price}
+                  onChange={handleDescription}
                     required
                     className="p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
                   />
                 </div>
               </div>
             </div>
-
-
-
+            {/* SUBMIT */}
+            <div className='w-4/5 m-auto p-4 flex justify-center'>
+              <button className='bg-slate-300 p-2 px-5 w-56 rounded-lg border-black border-2  hover:border-white hover:bg-slate-400'>SUBMIT</button>
+            </div>
           </div>
 
         </form>
