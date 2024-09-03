@@ -351,14 +351,14 @@ const Host = () => {
                   {facilities.map((facility) => (
                     <div
                       key={facility.name}
-                      className={`flex items-center gap-2 p-2 border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-blue-100 ${selectedFacilities.includes(facility.name)
+                      className={`flex items-center text-black gap-2 p-2 border border-gray-300 rounded-md shadow-sm cursor-pointer hover:bg-blue-100 ${selectedFacilities.includes(facility.name)
                         ? 'bg-blue-100 border-blue-400'
                         : ''
                         }`}
                       onClick={() => handleFacilityToggle(facility.name)}
                     >
                       {facility.icon}
-                      <span className="text-lg text-gray-700">{facility.name}</span>
+                      <span className="text-lg text-black">{facility.name}</span>
                     </div>
                   ))}
                 </div>
@@ -495,7 +495,7 @@ const Host = () => {
             </div>
             {/* SUBMIT */}
             <div className='w-4/5 m-auto p-4 flex justify-center'>
-              <button className='bg-slate-300 p-2 px-5 w-56 rounded-lg border-black border-2  hover:border-white hover:bg-slate-400'>SUBMIT</button>
+              <button className='bg-yellow-400 p-2 px-5 w-56 rounded-lg border-black border-2  hover:border-white hover:bg-yellow-600'>HOST</button>
             </div>
           </div>
 
