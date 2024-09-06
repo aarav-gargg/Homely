@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose"
 import authRoutes from "./Routes/auth.route.js"
+import hostRoutes from "./Routes/host.route.js"
 
 dotenv.config();
 
@@ -20,10 +21,11 @@ app.use(cors());
 app.use(express.static("public"))
 
 app.use("/api/auth",authRoutes);
+app.use("/api/host",hostRoutes)
 
 app.use((error,req,res,next)=>{
     const statusCode=error.statusCode || 500;
-    const message=error.message || "Internl server error";
+    const message=error.message || "Internal server error";
 
     return res.status(statusCode).json({
         success:false,
