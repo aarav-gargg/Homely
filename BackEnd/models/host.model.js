@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const hostSchema = mongoose.Schema({
     creator: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "UserData"
     },
     category: {
         type: String,
@@ -22,6 +22,10 @@ const hostSchema = mongoose.Schema({
         required: true
     },
     state: {
+        type: String,
+        required: true
+    },
+    country: {
         type: String,
         required: true
     },

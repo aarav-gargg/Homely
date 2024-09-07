@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import items from '../Data/categories';
+import { useSelector } from 'react-redux';
 import types from "../Data/types";
 import facilities from '../Data/facilities.jsx';
 import { IoInformationCircle } from "react-icons/io5";
 import { FaPlus, FaMinus, FaImages, FaTrashAlt } from 'react-icons/fa';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import axios from "axios";
 
 const Host = () => {
+  const user = useSelector((state) => state.user)
   const [isDropdownOpen, setIsDropdownOpen] = useState(null);
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
@@ -20,7 +23,7 @@ const Host = () => {
     address: "",
     city: "",
     state: "",
-    zip: "",
+    zip: 0,
     country: "",
   });
 
@@ -94,6 +97,44 @@ const Host = () => {
     ))
   }
 
+  const handleSubmit = async (e) =>{
+    e.preventDefault();
+    try {
+      const hostData = new FormData();
+      hostData.append("creator" , user.user._id);
+      hostData.append("category" , category);
+      hostData.append("type" , type);
+      hostData.append("address" , propaddress.address);
+      hostData.append("city" , propaddress.city);
+      hostData.append("state" , propaddress.state);
+      hostData.append("country" , propaddress.country);
+      hostData.append("zip" , propaddress.zip);
+      hostData.append("bedrooms" , bedrooms);
+      hostData.append("bathrooms" , bathrooms);
+      hostData.append("price" , placeDescription.price);
+      hostData.append("beds",beds);
+      hostData.append("guests",guests);
+      hostData.append("facilities" , selectedFacilities);
+      hostData.append("description" , placeDescription.description);
+      hostData.append("title" , placeDescription.title);
+      photos.forEach((photo) => {
+        hostData.append("photos", photo);
+      });
+      
+      const response = await axios.post("http://localhost:3000/api/host/create",hostData);
+      if(response.status==201){
+        alert("Property Has Been Hosted Successfully");
+      }
+      else{
+        alert("Failed to Host Property");
+      }
+    
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  }
+
 
   useEffect(() => {
     console.log("CATEGORY IS : ", category);
@@ -108,7 +149,7 @@ const Host = () => {
     <>
       <div>
         <h1 className="text-4xl md:text-5xl font-bold text-black mb-4 mx-11 my-7 px-11 font-roboto">Host a Property</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="w-4/5 m-auto my-9 bg-slate-500 rounded-2xl p-3">
             <h2 className="font-roboto text-2xl text-white">Basic Details of the Place</h2>
             <hr className="text-black dark:text-gray-400 my-2" />
@@ -378,8 +419,9 @@ const Host = () => {
                       {photos.length < 1 && (
                         <>
                           <input
-                            id="image"
+                            id="image-upload"
                             type="file"
+                            name=""
                             className='hidden'
                             accept='image/*'
                             required
@@ -427,6 +469,7 @@ const Host = () => {
                             id="image"
                             required
                             type="file"
+                            name='photos'
                             className='hidden'
                             accept='image/*'
                             onChange={handleUploadPhotos}
