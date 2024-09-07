@@ -82,53 +82,53 @@ const Host = () => {
     setPhotos(updatedPhotos);
   };
 
-  const [placeDescription , setPlaceDescription] = useState({
+  const [placeDescription, setPlaceDescription] = useState({
     title: "",
     description: "",
-    price : 0,
+    price: 0,
   })
 
-  const handleDescription = (e)=>{
-    const {name , value} = e.target;
+  const handleDescription = (e) => {
+    const { name, value } = e.target;
     setPlaceDescription((prev) => (
       {
-        ...prev , [name] : value,
+        ...prev, [name]: value,
       }
     ))
   }
 
-  const handleSubmit = async (e) =>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const hostData = new FormData();
-      hostData.append("creator" , user.user._id);
-      hostData.append("category" , category);
-      hostData.append("type" , type);
-      hostData.append("address" , propaddress.address);
-      hostData.append("city" , propaddress.city);
-      hostData.append("state" , propaddress.state);
-      hostData.append("country" , propaddress.country);
-      hostData.append("zip" , propaddress.zip);
-      hostData.append("bedrooms" , bedrooms);
-      hostData.append("bathrooms" , bathrooms);
-      hostData.append("price" , placeDescription.price);
-      hostData.append("beds",beds);
-      hostData.append("guests",guests);
-      hostData.append("facilities" , selectedFacilities);
-      hostData.append("description" , placeDescription.description);
-      hostData.append("title" , placeDescription.title);
+      hostData.append("creator", user.user._id);
+      hostData.append("category", category);
+      hostData.append("type", type);
+      hostData.append("address", propaddress.address);
+      hostData.append("city", propaddress.city);
+      hostData.append("state", propaddress.state);
+      hostData.append("country", propaddress.country);
+      hostData.append("zip", propaddress.zip);
+      hostData.append("bedrooms", bedrooms);
+      hostData.append("bathrooms", bathrooms);
+      hostData.append("price", placeDescription.price);
+      hostData.append("beds", beds);
+      hostData.append("guests", guests);
+      hostData.append("facilities", selectedFacilities);
+      hostData.append("description", placeDescription.description);
+      hostData.append("title", placeDescription.title);
       photos.forEach((photo) => {
-  hostData.append("photos", photo);
-});
-      
-      const response = await axios.post("http://localhost:3000/api/host/create",hostData);
-      if(response.status==201){
+        hostData.append("photos", photo);
+      });
+
+      const response = await axios.post("http://localhost:3000/api/host/create", hostData);
+      if (response.status == 201) {
         alert("Property Has Been Hosted Successfully");
       }
-      else{
+      else {
         alert("Failed to Host Property");
       }
-    
+
     } catch (error) {
       console.log(error);
       alert(error);
@@ -140,10 +140,10 @@ const Host = () => {
     console.log("CATEGORY IS : ", category);
     console.log("TYPE IS : ", type);
     console.log("SELECYED FACILITIES ARE: ", selectedFacilities)
-    console.log("ADRRESS DETAILS ARE: ",propaddress)
-    console.log("THE PHOTOS OF THE PLACE ARE: ",photos)
+    console.log("ADRRESS DETAILS ARE: ", propaddress)
+    console.log("THE PHOTOS OF THE PLACE ARE: ", photos)
     console.log("THE  DESCRIPTION OF THE PLACE IS: ", placeDescription)
-  }, [category, type, selectedFacilities,propaddress,placeDescription,photos])
+  }, [category, type, selectedFacilities, propaddress, placeDescription, photos])
 
   return (
     <>
@@ -527,7 +527,7 @@ const Host = () => {
                     placeholder='10000'
                     name='price'
                     value={placeDescription.price}
-                  onChange={handleDescription}
+                    onChange={handleDescription}
                     required
                     className="p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
                   />
