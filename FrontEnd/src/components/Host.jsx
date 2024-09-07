@@ -118,8 +118,8 @@ const Host = () => {
       hostData.append("description" , placeDescription.description);
       hostData.append("title" , placeDescription.title);
       photos.forEach((photo) => {
-        hostData.append("photos", photo);
-      });
+  hostData.append("photos", photo);
+});
       
       const response = await axios.post("http://localhost:3000/api/host/create",hostData);
       if(response.status==201){
@@ -419,9 +419,8 @@ const Host = () => {
                       {photos.length < 1 && (
                         <>
                           <input
-                            id="image-upload"
+                            id="image"
                             type="file"
-                            name=""
                             className='hidden'
                             accept='image/*'
                             required
@@ -469,7 +468,6 @@ const Host = () => {
                             id="image"
                             required
                             type="file"
-                            name='photos'
                             className='hidden'
                             accept='image/*'
                             onChange={handleUploadPhotos}
