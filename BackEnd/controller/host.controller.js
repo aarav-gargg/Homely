@@ -8,28 +8,42 @@ export const hostProperty = async (req, res, next) => {
 
         const photos = req.files;
 
-        if(!photos){
-            next(errorHandler(400 , "No files Uploaded"));
-            return;
+        // Check if photos were uploaded
+        if (!photos || photos.length === 0) {
+            return next(errorHandler(400, "No files uploaded"));
         }
 
         const photoPaths = photos.map((file) => file.path);
-
+        console.log(photoPaths)
+       
         const hostedProperty = new Host({
-            creator, category, type, address, city, state, zip, bedrooms, country, beds, bathrooms, guests, facilities, title, description, price , photoPaths
-        })
+            creator,
+            category,
+            type,
+            address,
+            city,
+            state,
+            country,
+            zip,
+            bedrooms,
+            beds,
+            bathrooms,
+            guests,
+            facilities,
+            title,
+            description,
+            price,
+            photos: photoPaths 
+        });
 
         await hostedProperty.save();
 
         res.status(201).json(hostedProperty);
-
-
-
     } catch (error) {
         next(error);
     }
+};
 
-}
 
 export const getProperties = async (req,res,next)=>{
     try {

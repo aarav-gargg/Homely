@@ -55,6 +55,7 @@ const hostSchema = mongoose.Schema({
     },
     photos: {
         type: [{ type: String }],
+        default: []
     },
     title: {
         type: String,

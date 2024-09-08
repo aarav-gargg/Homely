@@ -118,6 +118,7 @@ const Host = () => {
       hostData.append("description", placeDescription.description);
       hostData.append("title", placeDescription.title);
       photos.forEach((photo) => {
+        console.log(photo);
         hostData.append("photos", photo);
       });
 
@@ -423,7 +424,7 @@ const Host = () => {
                             type="file"
                             className='hidden'
                             accept='image/*'
-                            required
+                            // required
                             onChange={handleUploadPhotos}
                           />
                           <label
@@ -466,7 +467,7 @@ const Host = () => {
                           ))}
                           <input
                             id="image"
-                            required
+                            // required
                             type="file"
                             className='hidden'
                             accept='image/*'
