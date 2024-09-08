@@ -6,6 +6,7 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Host from './components/Host';
+import Properties from './components/Properties';
 
 function AppLayout() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/Register" element={<SignUp />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/createListing" element={<Host/>}/>
+        <Route path="/properties" element={<Properties/>}/>
       </Route>
     )
   );

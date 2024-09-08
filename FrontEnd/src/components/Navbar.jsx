@@ -78,10 +78,10 @@ const Navbar = () => {
                   Team
                 </NavLink>
                 <NavLink
-                  to="/"
+                  to="properties"
                   className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
                 >
-                  Projects
+                  Properties
                 </NavLink>
                 <div className="relative flex items-center">
                   <input
