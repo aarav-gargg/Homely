@@ -50,6 +50,9 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <div className="properties">
+            
+        </div>
       </div>
     </>
   );
