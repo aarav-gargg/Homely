@@ -537,7 +537,7 @@ const Host = () => {
             </div>
             {/* SUBMIT */}
             <div className='w-4/5 m-auto p-4 flex justify-center'>
-              <button className='bg-yellow-400 p-2 px-5 w-56 rounded-lg border-black border-2  hover:border-white hover:bg-yellow-600'>HOST</button>
+              <button className='bg-amber-300 p-2 px-5 w-56 rounded-lg border-black border-2   hover:bg-amber-400'>HOST</button>
             </div>
           </div>
 
