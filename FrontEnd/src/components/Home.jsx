@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import items from "../Data/categories.js"
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
+  const user = useSelector((state) => state.user);
+  
   return (
     <>
       <div className="bg-fav-color">
@@ -20,12 +26,12 @@ const Home = () => {
               Discover a wide range of affordable and cozy homes tailored to your needs.
               Whether you’re looking for a short-term stay or a long-term home, Homely has you covered.
             </p>
-            <a
-              href="/search"
+            <Link
+              to={user.user ? "createListing" : "/login"}
               className="bg-f-color text-white py-2 px-4 rounded-lg  border border-transparent hover:border-white hover:border-2 transition duration-300 ease-in-out w-full"
             >
-              Start Your Search
-            </a>
+              Host A Property
+            </Link>
           </div>
         </div>
         <div className="categories">
@@ -49,9 +55,6 @@ const Home = () => {
               </ul>
             </div>
           </div>
-        </div>
-        <div className="properties">
-            
         </div>
       </div>
     </>

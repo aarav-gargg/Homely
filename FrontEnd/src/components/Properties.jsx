@@ -61,7 +61,7 @@ const Properties = () => {
         )}
 
         {fetchedProperties.map((prop, index) => (
-          <div key={index} className="bg-slate-400 rounded-3xl p-5 shadow-lg my-3">
+          <div key={index} className="bg-proper rounded-3xl p-5 shadow-lg my-3">
             <div className="flex justify-between items-center">
               <h2 className="font-bold text-2xl text-gray-800">{prop.title}</h2>
               <div className="font-bold text-xl text-amber-400">Rs. {prop.price}</div>

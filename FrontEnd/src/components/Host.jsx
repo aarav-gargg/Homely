@@ -180,7 +180,7 @@ const Host = () => {
                 {types.map((typeItem) => (
                   <div
                     key={typeItem.name}
-                    className={`w-[300px] h-[100px] flex flex-row items-center justify-center relative bg-cover bg-center bg-no-repeat rounded-lg overflow-visible shadow-2xl hover:cursor-pointer hover:bg-slate-600 ${type === typeItem.name ? 'bg-slate-600' : ''
+                    className={`w-[300px] h-[100px] flex flex-row items-center  justify-center relative bg-cover bg-center bg-no-repeat rounded-lg overflow-visible shadow-2xl hover:cursor-pointer hover:bg-slate-700 ${type === typeItem.name ? 'bg-slate-600' : ''
                       }`}
                     onClick={() => handleTypeClick(typeItem.name)}
                   >

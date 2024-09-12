@@ -20,8 +20,9 @@ export default {
       },
     },     
     backgroundImage:{
-      'fav-color': 'radial-gradient(circle, #5d6d7e, #bfc9ca)',
-      'f-color':'linear-gradient(45deg,#212f3d,#5d6d7e)'
+      'fav-color': 'radial-gradient(circle, #5d6d7e, #75a3a3)',
+      'f-color':'linear-gradient(45deg,#212f3d,#5d6d7e)',
+      'proper' : 'linear-gradient(30deg,#33cccc,#248f8f)'
     }              
   },
   plugins: [],
