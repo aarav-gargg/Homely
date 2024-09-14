@@ -64,7 +64,7 @@ const Properties = () => {
           <div key={index} className="bg-proper rounded-3xl p-5 shadow-lg my-3">
             <div className="flex justify-between items-center">
               <h2 className="font-bold text-2xl text-gray-800">{prop.title}</h2>
-              <div className="font-bold text-xl text-amber-400">Rs. {prop.price}</div>
+              <div className="font-bold text-xl text-amber-400">₹ {prop.price}</div>
             </div>
 
             <div className="overflow-x-scroll flex gap-3 my-3">
@@ -95,7 +95,7 @@ const Properties = () => {
 
             <div className="flex justify-center items-center">
               <button className='border-lg bg-white p-2 rounded-xl w-1/6 hover:bg-slate-200' onClick={() =>{
-                navigate(`/listings/${prop._id}`)
+                navigate(`/properties/${prop._id}`)
               }}>View</button>
             </div>
           </div>

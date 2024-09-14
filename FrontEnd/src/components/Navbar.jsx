@@ -187,7 +187,7 @@ const Navbar = () => {
                 </button>
                 {isDropdownOpen && (
                   <div
-                    className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-white/90 backdrop-blur-2xl shadow-lg ring-1 ring-black ring-opacity-25 focus:outline-none"
+                    className="absolute right-0 z-10 mt-2 w-48 rounded-md bg-white/70   shadow-lg ring-1 ring-black ring-opacity-25 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"

@@ -1,13 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import items from "../Data/categories.js"
-import { useNavigate } from 'react-router-dom';
+import items from "../Data/categories.js";
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+
+import { useNavigate } from 'react-router-dom';
+import PropertyCard from './PropertyCard.jsx';
 
 const Home = () => {
-  const user = useSelector((state) => state.user);
-  
+  const [fetchedProperties, setFetchedProperties] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const resp = await axios.get("http://localhost:3000/api/host/");
+        setFetchedProperties(resp.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProperties();
+  }, []);
+  useEffect(() => {
+    console.log(fetchedProperties)
+  }, [fetchedProperties])
+
   return (
     <>
       <div className="bg-fav-color">
@@ -26,12 +42,12 @@ const Home = () => {
               Discover a wide range of affordable and cozy homes tailored to your needs.
               Whether you’re looking for a short-term stay or a long-term home, Homely has you covered.
             </p>
-            <Link
-              to={user.user ? "createListing" : "/login"}
-              className="bg-f-color text-white py-2 px-4 rounded-lg  border border-transparent hover:border-white hover:border-2 transition duration-300 ease-in-out w-full"
+            <a
+              href="/search"
+              className="bg-f-color text-white py-2 px-4 rounded-lg border border-transparent hover:border-white hover:border-2 transition duration-300 ease-in-out w-full"
             >
               Host A Property
-            </Link>
+            </a>
           </div>
         </div>
         <div className="categories">
@@ -56,10 +72,29 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <div className="properties">
+          <h1 className="text-4xl font-bold mb-4 font-yusei mx-10 my-5 text-black">Recently Added Properties</h1>
+          <div className='px-12 pb-32  lg:px-5 flex flex-wrap justify-center gap-1'>
+            {fetchedProperties.map(({ _id, creator, photos, city, state, country, category, type, price, booking = false }) => (
+              <PropertyCard
+                key={_id}
+                id={_id}
+                creator={creator}
+                photos={photos}
+                city={city}
+                state={state}
+                country={country}
+                category={category}
+                type={type}
+                price={price}
+                booking={booking}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
 };
 
 export default Home;
-
