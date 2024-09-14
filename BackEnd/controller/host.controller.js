@@ -66,3 +66,19 @@ export const getProperties = async (req,res,next)=>{
         next(error);
     }
 }
+
+export const getProperty = async (req ,res,next) =>{
+    try {
+        const propertyId = req.params.propertyId;
+
+        let property = await Host.findById(propertyId).populate({
+            path: 'creator',
+            select: 'name email'
+        });
+        res.status(200).json(property);
+        
+
+    } catch (error) {
+        next(error);
+    }
+}

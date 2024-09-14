@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Host from './components/Host';
 import Properties from './components/Properties';
+import Property from './components/Property';
 
 function AppLayout() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/createListing" element={<Host/>}/>
         <Route path="/properties" element={<Properties/>}/>
+        <Route path="/properties/:propertyId" element={<Property/>}/>
       </Route>
     )
   );
