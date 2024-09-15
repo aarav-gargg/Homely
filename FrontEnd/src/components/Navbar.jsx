@@ -165,7 +165,7 @@ const Navbar = () => {
             <div className="flex items-center gap-5">
               {user.user != null && (
                 <NavLink
-                  to="createListing"
+                  to="listProperty"
                   className="rounded-md px-3 py-2 text-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                 >
                   Host

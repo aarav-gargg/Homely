@@ -44,7 +44,7 @@ const Home = () => {
               Whether you’re looking for a short-term stay or a long-term home, Homely has you covered.
             </p>
             <a
-              href="/search"
+              href="/listProperty"
               className="bg-f-color text-white py-2 px-4 rounded-lg border border-transparent hover:border-white hover:border-2 transition duration-300 ease-in-out w-full"
             >
               Host A Property

@@ -25,7 +25,7 @@ function App() {
         <Route path="" element={<Home />} />
         <Route path="/Register" element={<SignUp />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/createListing" element={<Host/>}/>
+        <Route path="/listProperty" element={<Host/>}/>
         <Route path="/properties" element={<Properties/>}/>
         <Route path="/properties/:propertyId" element={<Property/>}/>
       </Route>
