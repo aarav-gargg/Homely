@@ -3,13 +3,14 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { GoDotFill } from "react-icons/go";
 
 const Property = () => {
   const { propertyId } = useParams();
   const [fetchedProperty, setFetchedProperty] = useState(null);
-  const [currentSlide, setCurrentSlide] = useState(0); 
-  const [isPopupOpen, setIsPopupOpen] = useState(false); 
-  const [popupImage, setPopupImage] = useState(null); 
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupImage, setPopupImage] = useState(null);
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -23,9 +24,9 @@ const Property = () => {
     fetchProperty();
   }, [propertyId]);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(fetchedProperty)
-  },[fetchedProperty])
+  }, [fetchedProperty])
 
   const showNextSlide = () => {
     setCurrentSlide((prevSlide) =>
@@ -59,22 +60,22 @@ const Property = () => {
 
   return (
     <>
-   <div className='w-80 mx-11 px-11 my-5 flex items-start justify-start text-left relative'>
-  <h1 className='font-yusei text-5xl font-bold text-gray-900 mb-2'>
-    {fetchedProperty.title}
-  </h1>
+      <div className='w-80 mx-11 px-11 my-5 flex items-start justify-start text-left relative'>
+        <h1 className='font-yusei text-5xl font-bold text-gray-900 mb-2'>
+          {fetchedProperty.title}
+        </h1>
 
-    </div>
+      </div>
       <div className="w-4/5 m-auto h-2/3  relative flex items-center justify-center my-5 ">
-        <div className="flex gap-4 overflow-hidden w-full">
+        <div className="flex gap-4 overflow-hidden w-full rounded-3xl">
           {[0, 1].map((offset) => {
             const index = (currentSlide + offset) % fetchedProperty.photos.length;
             return (
-              <div className="flex-none w-1/2 h-96 cursor-pointer object-cover" key={index} onClick={() => openPopup(fetchedProperty.photos[index])}>
+              <div className="flex-none w-1/2 h-96 cursor-pointer object-cover rounded-3xl" key={index} onClick={() => openPopup(fetchedProperty.photos[index])}>
                 <img
                   src={`http://localhost:3000/${fetchedProperty.photos[index]?.replace('public', '')}`}
                   alt=""
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-3xl"
                 />
               </div>
             );
@@ -91,7 +92,7 @@ const Property = () => {
           <FaArrowLeft />
         </div>
 
-       
+
         <div
           className="absolute top-1/2 transform -translate-y-1/2 p-2 rounded-full border-none cursor-pointer flex items-center justify-center bg-white/80 z-50 right-1.5 hover:bg-white"
           onClick={(e) => {
@@ -101,7 +102,7 @@ const Property = () => {
         >
           <FaArrowRight />
         </div>
-      </div>     
+      </div>
       {isPopupOpen && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/70 z-50">
           <div className="relative  bg-white p-4">
@@ -120,6 +121,19 @@ const Property = () => {
           </div>
         </div>
       )}
+      <div className='w-4/5 m-auto h-2/3 relative hover:shadow-2xl p-2 rounded-full my-2'>
+
+        <div className='mx-8 text-lg font-semibold font-roboto '><span className='font-bold text-2xl'>{fetchedProperty.type}</span> in {fetchedProperty.city} , {fetchedProperty.state} - {fetchedProperty.zip}</div>
+        <div className='mx-8 text-md font-semibold font-roboto px-5'>
+          {fetchedProperty.bedrooms} {fetchedProperty.bedrooms > 1 ? 'bedrooms' : 'bedroom'}
+          <span> with </span> 
+          {fetchedProperty.beds} {fetchedProperty.beds > 1 ? 'beds' : 'bed'}
+          <span className='mx-2 text-gray-900 text-lg'>•</span>
+          {fetchedProperty.bathrooms} {fetchedProperty.bathrooms > 1 ? 'bathrooms' : 'bathroom'}
+        </div>
+      
+      </div>
+      <hr class="w-11/12 h-1 mx-auto my-2 bg-proper border-0 rounded "/>
     </>
   );
 };
