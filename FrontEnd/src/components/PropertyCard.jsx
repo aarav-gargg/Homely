@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const PropertyCard = ({
   id,
@@ -26,6 +27,10 @@ const PropertyCard = ({
     setCurrentIndex((prevIndex) => (prevIndex + 1 ) % photos.length)
   }
 
+  useEffect(()=>{
+    console.log("photos",photos);
+  },[photos])
+
   return (
     <div className='relative cursor-pointer p-3 rounded-lg hover:shadow-lg  bg-proper mx-2'
       onClick={() => {
@@ -34,7 +39,10 @@ const PropertyCard = ({
       <div className='w-72 overflow-hidden rounded-lg mb-2.5 '>
         <div className='flex w-full items-center transition-transform duration-500 ease-in-out'
           style={{ transform: `translateX(-${currentIndex * 100}%)`}}>
-          {photos?.map((photo, index) => (
+          {photos.length===0 && <div className='w-full h-full flex justify-center items-center my-11 py-11'>
+        <AiOutlineLoading3Quarters className='animate-spin text-4xl spin-animation my-11' />
+      </div>}
+          {photos.length>0 && photos?.map((photo, index) => (
             <div
               className='relative flex-none w-full h-64 flex items-center justify-center bg-gray-200'
               key={index}
@@ -62,10 +70,12 @@ const PropertyCard = ({
           ))}
         </div>
       </div>
+      {photos.length > 0 &&  <div>
        <h3 className='items-center justify-center font-poppins text-sm font-bold'>{city}, {state}, {country}</h3>
        <p className='font-semibold text-sm'>{category}</p>
        <p className='font-semibold text-sm'>{type}</p>
        <span className='font-semibold text-md'>₹{price}</span>
+       </div>}
     </div>
   );
 }

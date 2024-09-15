@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Property = () => {
   const { propertyId } = useParams();
@@ -49,7 +50,11 @@ const Property = () => {
   };
 
   if (!fetchedProperty) {
-    return <div>Loading...</div>; 
+    return (
+      <div className='w-full h-full flex justify-center items-center my-11 py-11'>
+        <AiOutlineLoading3Quarters className='animate-spin text-4xl spin-animation my-11' />
+      </div>
+    );
   }
 
   return (

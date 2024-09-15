@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import items from "../Data/categories.js";
 import axios from 'axios';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import { useNavigate } from 'react-router-dom';
 import PropertyCard from './PropertyCard.jsx';
@@ -21,7 +22,7 @@ const Home = () => {
     fetchProperties();
   }, []);
   useEffect(() => {
-    console.log(fetchedProperties)
+    console.log("fetchedProperties",fetchedProperties)
   }, [fetchedProperties])
 
   return (
@@ -75,6 +76,9 @@ const Home = () => {
         <div className="properties">
           <h1 className="text-4xl font-bold mb-4 font-yusei mx-10 my-5 text-black">Recently Added Properties</h1>
           <div className='px-12 pb-32  lg:px-5 flex flex-wrap justify-center gap-1'>
+            {fetchedProperties.length===0 && <PropertyCard
+                photos={[]}
+              /> }
             {fetchedProperties.map(({ _id, creator, photos, city, state, country, category, type, price, booking = false }) => (
               <PropertyCard
                 key={_id}
