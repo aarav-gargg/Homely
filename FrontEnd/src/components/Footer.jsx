@@ -4,9 +4,8 @@ import { AiOutlineArrowUp } from 'react-icons/ai'; // Back to top icon
 
 const Footer = () => {
   return (
-    <footer className="bg-f-color  text-white py-8 px-4">
+    <footer className="bg-f-color  text-white py-8 px-11 ">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        {/* About Us Section */}
         <div>
           <h2 className="text-lg font-semibold mb-4">About Us</h2>
           <p className="text-sm">
@@ -42,7 +41,7 @@ const Footer = () => {
       </div>
 
       
-      <div className="border-t border-gray-700 my-8"></div>
+      <div className="border-t border-gray-100 my-8"></div>
 
      
       <div className="flex justify-center">

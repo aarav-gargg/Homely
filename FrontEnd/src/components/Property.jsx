@@ -143,9 +143,9 @@ const Property = () => {
         </div>
       </div>
       <div>
-        <div className='w-3/6 h-2 mx-11'>
+        <div className='w-3/6  my-5 mx-11'>
          <h2 className='text-2xl font-semibold font-yusei'>About The Place</h2>
-         <hr className='w-2/6 h-1  bg-black'/>
+         
          {fetchedProperty.description}
         </div>
       </div>

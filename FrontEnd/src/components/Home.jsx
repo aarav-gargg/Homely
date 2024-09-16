@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import items from "../Data/categories.js";
 import axios from 'axios';
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-
 import { useNavigate } from 'react-router-dom';
 import PropertyCard from './PropertyCard.jsx';
 
