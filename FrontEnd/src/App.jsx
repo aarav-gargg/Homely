@@ -8,12 +8,14 @@ import Navbar from './components/Navbar';
 import Host from './components/Host';
 import Properties from './components/Properties';
 import Property from './components/Property';
+import Footer from './components/Footer';
 
 function AppLayout() {
   return (
     <>
       <Navbar />
       <Outlet />
+      <Footer/>
     </>
   );
 }

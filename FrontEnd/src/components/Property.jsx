@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { GoDotFill } from "react-icons/go";
+import { BiSolidUserCheck } from "react-icons/bi";
 
 const Property = () => {
   const { propertyId } = useParams();
@@ -126,14 +126,29 @@ const Property = () => {
         <div className='mx-8 text-lg font-semibold font-roboto '><span className='font-bold text-2xl'>{fetchedProperty.type}</span> in {fetchedProperty.city} , {fetchedProperty.state} - {fetchedProperty.zip}</div>
         <div className='mx-8 text-md font-semibold font-roboto px-5'>
           {fetchedProperty.bedrooms} {fetchedProperty.bedrooms > 1 ? 'bedrooms' : 'bedroom'}
-          <span> with </span> 
+          <span> with </span>
           {fetchedProperty.beds} {fetchedProperty.beds > 1 ? 'beds' : 'bed'}
           <span className='mx-2 text-gray-900 text-lg'>•</span>
           {fetchedProperty.bathrooms} {fetchedProperty.bathrooms > 1 ? 'bathrooms' : 'bathroom'}
         </div>
-      
+
       </div>
-      <hr class="w-11/12 h-1 mx-auto my-2 bg-proper border-0 rounded "/>
+      <hr class="w-11/12 h-1 mx-auto my-2 bg-proper border-0 rounded " />
+      <div className='w-4/5 p-2 my-3 px-5 flex justify-center m-auto'>
+        <div className='w-2/6 mx-11 my-2 font-extrabold font-roboto  border-t-4 border-b-4 p-4 flex justify-center'>
+          <BiSolidUserCheck className='text-5xl mx-2 text-white'/>
+          Hosted By : {fetchedProperty.creator.name}
+          <br />
+          Email : {fetchedProperty.creator.email}
+        </div>
+      </div>
+      <div>
+        <div className='w-3/6 h-2 mx-11'>
+         <h2 className='text-2xl font-semibold font-yusei'>About The Place</h2>
+         <hr className='w-2/6 h-1  bg-black'/>
+         {fetchedProperty.description}
+        </div>
+      </div>
     </>
   );
 };
