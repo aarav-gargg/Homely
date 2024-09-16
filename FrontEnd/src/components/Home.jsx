@@ -1,24 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import items from "../Data/categories.js";
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import PropertyCard from './PropertyCard.jsx';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
   const [fetchedProperties, setFetchedProperties] = useState([]);
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user)
+  const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const resp = await axios.get("http://localhost:3000/api/host/");
+        const resp = await axios.get('http://localhost:3000/api/host/');
         setFetchedProperties(resp.data);
+        setHasFetched(true); 
       } catch (error) {
         console.log(error);
+        setHasFetched(false); 
       }
     };
-    fetchProperties();
-  }, []);
+
+    if (!hasFetched) {
+      fetchProperties();
+    }
+  }, [hasFetched]);
   useEffect(() => {
     console.log("fetchedProperties",fetchedProperties)
   }, [fetchedProperties])
@@ -41,12 +50,12 @@ const Home = () => {
               Discover a wide range of affordable and cozy homes tailored to your needs.
               Whether you’re looking for a short-term stay or a long-term home, Homely has you covered.
             </p>
-            <a
-              href="/listProperty"
+            <Link
+              to={user.user?"/listProperty":"/login"}
               className="bg-f-color text-white py-2 px-4 rounded-lg border border-transparent hover:border-white hover:border-2 transition duration-300 ease-in-out w-full"
             >
               Host A Property
-            </a>
+            </Link>
           </div>
         </div>
         <div className="categories">

@@ -7,9 +7,11 @@ import { IoInformationCircle } from "react-icons/io5";
 import { FaPlus, FaMinus, FaImages, FaTrashAlt } from 'react-icons/fa';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const Host = () => {
   const user = useSelector((state) => state.user)
+  const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(null);
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
@@ -125,6 +127,7 @@ const Host = () => {
       const response = await axios.post("http://localhost:3000/api/host/create", hostData);
       if (response.status == 201) {
         alert("Property Has Been Hosted Successfully");
+        navigate("/");
       }
       else {
         alert("Failed to Host Property");

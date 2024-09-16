@@ -64,7 +64,7 @@ const Properties = () => {
           <div key={index} className="bg-proper rounded-3xl p-5 shadow-lg my-3">
             <div className="flex justify-between items-center">
               <h2 className="font-bold text-2xl text-gray-800">{prop.title}</h2>
-              <div className="font-bold text-xl text-amber-400">₹ {prop.price}</div>
+              <div className="font-bold text-xl text-amber-400">₹ {prop.price} per night</div>
             </div>
 
             <div className="overflow-x-scroll flex gap-3 my-3">

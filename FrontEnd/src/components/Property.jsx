@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import facilities from '../Data/facilities';
 import { BiSolidUserCheck } from "react-icons/bi";
 
 const Property = () => {
@@ -60,7 +61,7 @@ const Property = () => {
 
   return (
     <>
-      <div className='w-80 mx-11 px-11 my-5 flex items-start justify-start text-left relative'>
+      <div className='w-4/5 mx-11 px-11 my-5 flex items-start justify-start text-left relative'>
         <h1 className='font-yusei text-5xl font-bold text-gray-900 mb-2'>
           {fetchedProperty.title}
         </h1>
@@ -123,7 +124,7 @@ const Property = () => {
       )}
       <div className='w-4/5 m-auto h-2/3 relative hover:shadow-2xl p-2 rounded-full my-2'>
 
-        <div className='mx-8 text-lg font-semibold font-roboto '><span className='font-bold text-2xl'>{fetchedProperty.type}</span> in {fetchedProperty.city} , {fetchedProperty.state} - {fetchedProperty.zip}</div>
+        <div className='mx-8 text-lg font-semibold font-roboto '><span className='font-bold text-2xl text-white'>{fetchedProperty.type}</span> in {fetchedProperty.city} , {fetchedProperty.state} - {fetchedProperty.zip}</div>
         <div className='mx-8 text-md font-semibold font-roboto px-5'>
           {fetchedProperty.bedrooms} {fetchedProperty.bedrooms > 1 ? 'bedrooms' : 'bedroom'}
           <span> with </span>
@@ -135,20 +136,37 @@ const Property = () => {
       </div>
       <hr class="w-11/12 h-1 mx-auto my-2 bg-proper border-0 rounded " />
       <div className='w-4/5 p-2 my-3 px-5 flex justify-center m-auto'>
-        <div className='w-2/6 mx-11 my-2 font-extrabold font-roboto  border-t-4 border-b-4 p-4 flex justify-center'>
-          <BiSolidUserCheck className='text-5xl mx-2 text-white'/>
+        <div className='w-5/6 mx-11 my-2 font-extrabold font-poppins  border-t-4 border-b-4 p-4 flex justify-center'>
+          <BiSolidUserCheck className='text-5xl mx-2 text-white' />
           Hosted By : {fetchedProperty.creator.name}
           <br />
           Email : {fetchedProperty.creator.email}
         </div>
       </div>
-      <div>
-        <div className='w-3/6  my-5 mx-11'>
-         <h2 className='text-2xl font-semibold font-yusei'>About The Place</h2>
-         
-         {fetchedProperty.description}
+      <div className='flex flex-row'>
+        <div className='w-7/12  my-5 mx-11 px-11 flex flex-col'>
+          <h2 className='text-2xl font-semibold font-yusei my-2'>About The Place</h2>
+          <div className='font-yusei text-lg text-white'>
+            {fetchedProperty.description}
+          </div>
+        </div>
+        <div className='w-5/12  my-5 mx-11 flex flex-col' >
+          <h2 className='text-2xl font-semibold font-yusei my-2'>Facilities Provided</h2>
+          <div className='grid grid-cols-2 gap-x-3 my-7'>
+            {fetchedProperty.facilities[0].split(",").map((item, index) => (
+                <div className='flex items-center gap-5 text-lg font-semibold mb-5' key={index}>
+                  <div className='flex flex-row justify-center items-center gap-3'>
+                    {facilities.find((facility) => facility.name === item).icon}
+                    {item}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+
         </div>
       </div>
+      
     </>
   );
 };
