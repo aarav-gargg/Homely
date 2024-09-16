@@ -4,7 +4,10 @@ import axios from 'axios';
 import { FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import facilities from '../Data/facilities';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 import { BiSolidUserCheck } from "react-icons/bi";
+import { DateRange } from 'react-date-range';
 
 const Property = () => {
   const { propertyId } = useParams();
@@ -50,6 +53,20 @@ const Property = () => {
     setIsPopupOpen(false);
     setPopupImage(null);
   };
+
+  const [dateRange, setDateRange] = useState([{
+    startDate: new Date(),
+    endDate: new Date(),
+    key: "selection"
+  }]);
+
+  const handleDateSelect = (ranges) => {
+    setDateRange([ranges.selection]);
+  };
+
+  const start = new Date(dateRange[0].startDate);
+  const end = new Date(dateRange[0].endDate);
+  const dayCount = Math.round(end - start) / (1000 * 60 * 60 * 24);
 
   if (!fetchedProperty) {
     return (
@@ -154,19 +171,35 @@ const Property = () => {
           <h2 className='text-2xl font-semibold font-yusei my-2'>Facilities Provided</h2>
           <div className='grid grid-cols-2 gap-x-3 my-7'>
             {fetchedProperty.facilities[0].split(",").map((item, index) => (
-                <div className='flex items-center gap-5 text-lg font-semibold mb-5' key={index}>
-                  <div className='flex flex-row justify-center items-center gap-3'>
-                    {facilities.find((facility) => facility.name === item).icon}
-                    {item}
-                  </div>
+              <div className='flex items-center gap-5 text-lg font-semibold mb-5' key={index}>
+                <div className='flex flex-row justify-center items-center gap-3'>
+                  {facilities.find((facility) => facility.name === item).icon}
+                  {item}
                 </div>
-              ))
+              </div>
+            ))
             }
           </div>
 
         </div>
       </div>
-      
+      <div className='flex flex-row'>
+        <div className='w-5/12  my-5 mx-11 flex flex-col'>
+          <h2 className='text-2xl font-semibold font-yusei my-2'>Complete Address</h2>
+          <div className='w-5/6 mx-11 my-2 font-bold font-poppins  border-t-4 border-b-4 p-4 flex justify-center'>
+            {fetchedProperty.address} {fetchedProperty.city} , {fetchedProperty.state}-{fetchedProperty.zip} , {fetchedProperty.country}
+          </div>
+        </div>
+        <div className='my-5 mx-11 px-11 flex flex-col rounded-lg '>
+          <h2 className='text-2xl font-semibold font-yusei my-2'>How long do you want to stay</h2>
+          <DateRange ranges={dateRange} onChange={handleDateSelect} />
+          {/* {dayCount > 1 && (
+            <h2 className='mb-2.5'>
+              ${fetchedProperty.price} X 
+            </h2>
+          )} */}
+        </div>
+      </div>
     </>
   );
 };

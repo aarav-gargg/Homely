@@ -23,6 +23,27 @@ body{
   animation: spin 1s linear infinite;
 }
 
+
+.rdrCalendarWrapper .rdrMonthAndYearPickers {
+  background: #449fb4; 
+  border-radius: 4px; 
+  color: #ffffff; 
+}
+
+.rdrDayNumber span {
+  color: #000000; 
+  font-size: 16px; 
+}
+
+
+.rdrMonthPicker .rdrInRange {
+  background: rgba(0, 123, 255, 0.2);
+  border-radius: 50%; 
+}
+
+
+
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
