@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose"
 import authRoutes from "./Routes/auth.route.js"
 import hostRoutes from "./Routes/host.route.js"
+import bookingRoutes from "./Routes/booking.route.js"
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(express.static("public"))
 
 app.use("/api/auth",authRoutes);
 app.use("/api/host",hostRoutes)
+app.use("/api/booking",bookingRoutes)
 
 app.use((error,req,res,next)=>{
     const statusCode=error.statusCode || 500;
