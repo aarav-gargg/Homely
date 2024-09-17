@@ -64,9 +64,13 @@ const Property = () => {
     setDateRange([ranges.selection]);
   };
 
+  const handleSubmit = ()=>{
+
+  }
+  
   const start = new Date(dateRange[0].startDate);
   const end = new Date(dateRange[0].endDate);
-  const dayCount = Math.round(end - start) / (1000 * 60 * 60 * 24);
+  let dayCount = Math.round(end - start) / (1000 * 60 * 60 * 24);
 
   if (!fetchedProperty) {
     return (
@@ -139,7 +143,7 @@ const Property = () => {
           </div>
         </div>
       )}
-      <div className='w-4/5 m-auto h-2/3 relative hover:shadow-2xl p-2 rounded-full my-2'>
+      <div className='w-4/5 m-auto relative hover:shadow-2xl p-2 rounded-full my-2'>
 
         <div className='mx-8 text-lg font-semibold font-roboto '><span className='font-bold text-2xl text-white'>{fetchedProperty.type}</span> in {fetchedProperty.city} , {fetchedProperty.state} - {fetchedProperty.zip}</div>
         <div className='mx-8 text-md font-semibold font-roboto px-5'>
@@ -183,23 +187,48 @@ const Property = () => {
 
         </div>
       </div>
-      <div className='flex flex-row'>
-        <div className='w-5/12  my-5 mx-11 flex flex-col'>
-          <h2 className='text-2xl font-semibold font-yusei my-2'>Complete Address</h2>
-          <div className='w-5/6 mx-11 my-2 font-bold font-poppins  border-t-4 border-b-4 p-4 flex justify-center'>
-            {fetchedProperty.address} {fetchedProperty.city} , {fetchedProperty.state}-{fetchedProperty.zip} , {fetchedProperty.country}
+      <div className="flex flex-col md:flex-row  rounded-lg shadow-md p-4">
+       
+        <div className="w-full md:w-5/12 my-5 mx-4 md:mx-11 flex flex-col">
+          <h2 className="text-2xl font-semibold font-yusei my-2">Complete Address</h2>
+          <div className="w-full md:w-5/6 mx-4 md:mx-0 my-2 p-4 border-t-4 border-b-4 rounded-md shadow-sm font-bold font-poppins ">
+            {fetchedProperty.address} {fetchedProperty.city}, {fetchedProperty.state}-{fetchedProperty.zip}, {fetchedProperty.country}
+          </div>
+
+          {/* Trip Details */}
+          <div className="mx-auto my-4">
+            <h2 className="text-2xl font-semibold font-yusei my-2">Trip Details</h2>
+            <h2 className="mb-2.5 text-lg font-semibold">
+              ₹{fetchedProperty.price} X {dayCount > 1 ? `${dayCount} nights` : `${dayCount=1} night`}
+            </h2>
+            <h2 className="mb-2.5 text-lg font-semibold">
+              Total price: ₹{fetchedProperty.price * dayCount}
+            </h2>
+            <h3 className="text-md mb-2.5">
+              Start Date: <span className='text-white font-semibold'>{dateRange[0].startDate.toDateString()}</span>
+            </h3>
+            <h3 className="text-md mb-2.5">
+              End Date: <span className='text-white font-semibold'>{dateRange[0].endDate.toDateString()}</span>
+            </h3>
+            <button className="w-full mt-7 sm:max-w-[300px] py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+            onClick={handleBooking}
+            type='submit'
+            >
+              Book
+            </button>
           </div>
         </div>
-        <div className='my-5 mx-11 px-11 flex flex-col rounded-lg '>
-          <h2 className='text-2xl font-semibold font-yusei my-2'>How long do you want to stay</h2>
-          <DateRange ranges={dateRange} onChange={handleDateSelect} />
-          {/* {dayCount > 1 && (
-            <h2 className='mb-2.5'>
-              ${fetchedProperty.price} X 
-            </h2>
-          )} */}
+
+        {/* Date Range Picker Section */}
+        <div className="w-full md:w-7/12 my-5 mx-11 md:mx-11 px-4 md:px-11 flex flex-col rounded-lg shadow-sm">
+          <div className="justify-center items-center  font-yusei mx-11  md:mx-11 px-11 md:px-0">
+            <h2 className="text-2xl font-semibold font-yusei my-2">How long do you want to stay</h2>
+            <DateRange ranges={dateRange} onChange={handleDateSelect} />
+          </div>
         </div>
       </div>
+
+
     </>
   );
 };
