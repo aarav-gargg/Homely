@@ -64,10 +64,10 @@ const Property = () => {
     setDateRange([ranges.selection]);
   };
 
-  const handleSubmit = ()=>{
+  const handleBooking = ()=>{
 
   }
-  
+
   const start = new Date(dateRange[0].startDate);
   const end = new Date(dateRange[0].endDate);
   let dayCount = Math.round(end - start) / (1000 * 60 * 60 * 24);
