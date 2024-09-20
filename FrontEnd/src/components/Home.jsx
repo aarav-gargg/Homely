@@ -17,19 +17,18 @@ const Home = () => {
       try {
         const resp = await axios.get('http://localhost:3000/api/host/');
         setFetchedProperties(resp.data);
-        setHasFetched(true); 
+        setHasFetched(true);
       } catch (error) {
         console.log(error);
-        setHasFetched(false); 
+        setHasFetched(false);
       }
     };
-
     if (!hasFetched) {
       fetchProperties();
     }
   }, [hasFetched]);
   useEffect(() => {
-    console.log("fetchedProperties",fetchedProperties)
+    console.log("fetchedProperties", fetchedProperties)
   }, [fetchedProperties])
 
   return (
@@ -51,7 +50,7 @@ const Home = () => {
               Whether you’re looking for a short-term stay or a long-term home, Homely has you covered.
             </p>
             <Link
-              to={user.user?"/listProperty":"/login"}
+              to={user.user ? "/listProperty" : "/login"}
               className="bg-f-color text-white py-2 px-4 rounded-lg border border-transparent hover:border-white hover:border-2 transition duration-300 ease-in-out w-full"
             >
               Host A Property
@@ -83,9 +82,9 @@ const Home = () => {
         <div className="properties">
           <h1 className="text-4xl font-bold mb-4 font-yusei mx-10 my-5 text-black">Recently Added Properties</h1>
           <div className='px-12 pb-32  lg:px-5 flex flex-wrap justify-center gap-1'>
-            {fetchedProperties.length===0 && <PropertyCard
-                photos={[]}
-              /> }
+            {fetchedProperties.length === 0 && <PropertyCard
+              photos={[]}
+            />}
             {fetchedProperties.map(({ _id, creator, photos, city, state, country, category, type, price, booking = false }) => (
               <PropertyCard
                 key={_id}
