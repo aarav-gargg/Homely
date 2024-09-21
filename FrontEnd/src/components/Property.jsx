@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import facilities from '../Data/facilities';
@@ -10,6 +12,8 @@ import { BiSolidUserCheck } from "react-icons/bi";
 import { DateRange } from 'react-date-range';
 
 const Property = () => {
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const { propertyId } = useParams();
   const [fetchedProperty, setFetchedProperty] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -64,8 +68,34 @@ const Property = () => {
     setDateRange([ranges.selection]);
   };
 
-  const handleBooking = ()=>{
+  const handleBooking = async ()=>{
 
+    if(user.user==null){
+      alert("Please login to book any property");
+      navigate("/login");
+    }
+     const data = {
+      "startDate": dateRange[0].startDate.toISOString(),
+      "endDate": dateRange[0].endDate.toISOString(),
+      "customerId": user.user._id,
+      "propertyId": propertyId,
+      "hostId" : fetchedProperty.creator._id,
+      "totalPrice" : fetchedProperty.price * dayCount
+     }
+    try {
+      const resp = await axios.post("http://localhost:3000/api/booking/create" , data);
+      if(resp.status==200){
+        alert("PROPERTY HAS BEEN BOOKED");
+      }
+      else{
+        alert(resp);
+      }
+
+    } catch (error) {
+       console.log(error);
+       alert(error);
+    }
+     
   }
 
   const start = new Date(dateRange[0].startDate);
@@ -195,7 +225,6 @@ const Property = () => {
             {fetchedProperty.address} {fetchedProperty.city}, {fetchedProperty.state}-{fetchedProperty.zip}, {fetchedProperty.country}
           </div>
 
-          {/* Trip Details */}
           <div className="mx-auto my-4">
             <h2 className="text-2xl font-semibold font-yusei my-2">Trip Details</h2>
             <h2 className="mb-2.5 text-lg font-semibold">
@@ -219,7 +248,7 @@ const Property = () => {
           </div>
         </div>
 
-        {/* Date Range Picker Section */}
+        
         <div className="w-full md:w-7/12 my-5 mx-11 md:mx-11 px-4 md:px-11 flex flex-col rounded-lg shadow-sm">
           <div className="justify-center items-center  font-yusei mx-11  md:mx-11 px-11 md:px-0">
             <h2 className="text-2xl font-semibold font-yusei my-2">How long do you want to stay</h2>

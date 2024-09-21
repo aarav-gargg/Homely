@@ -5,7 +5,7 @@ export const getTripList = async (req,res,next) => {
     try {
         const {userId} = req.params;
 
-        const trips = await BookingSchema.find({customerId: userId}).populate("customerId hostId  propertyId");
+        const trips = await BookingSchema.find({customerId: userId}).populate("customerId hostId propertyId");
 
         if(!trips) return next(errorHandler("404" , "Booking Not Found"));
 
