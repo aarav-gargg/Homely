@@ -1,4 +1,5 @@
 import BookingSchema from "../models/booking.model.js"
+import Host from "../models/host.model.js";
 import { errorHandler } from "../utils/error.js";
 
 export const getTripList = async (req,res,next) => {
@@ -11,6 +12,18 @@ export const getTripList = async (req,res,next) => {
 
         res.status(200).json(trips);
         
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const getProperty = async(req,res,next) => {
+    try {
+        const {propertyId} = req.params;
+
+        const property = await Host.findById(propertyId);
+
+        res.status(200).json(property);
     } catch (error) {
         next(error);
     }

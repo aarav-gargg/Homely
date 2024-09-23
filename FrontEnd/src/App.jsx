@@ -9,6 +9,7 @@ import Host from './components/Host';
 import Properties from './components/Properties';
 import Property from './components/Property';
 import Footer from './components/Footer';
+import TripList from './components/TripList';
 
 function AppLayout() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/listProperty" element={<Host/>}/>
         <Route path="/properties" element={<Properties/>}/>
         <Route path="/properties/:propertyId" element={<Property/>}/>
+        <Route path="/:userId/trips" element={<TripList/>}/>
       </Route>
     )
   );

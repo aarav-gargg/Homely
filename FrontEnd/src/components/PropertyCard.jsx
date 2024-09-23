@@ -14,7 +14,9 @@ const PropertyCard = ({
   category,
   type,
   price,
-  booking
+  booking,
+  startDate,
+  endDate,
 }) => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -75,6 +77,11 @@ const PropertyCard = ({
        <p className='font-semibold text-sm'>{category}</p>
        <p className='font-semibold text-sm'>{type}</p>
        <span className='font-semibold text-md'>₹{price}</span>
+       {startDate && endDate && <div><span className='font-semibold text-sm text-white'>
+      From {new Date(startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+      <br /> 
+      To {new Date(endDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+    </span></div>}
        </div>}
     </div>
   );
