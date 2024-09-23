@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 import PropertyCard from './PropertyCard';
 
 const TripList = () => {
-    // Get user from the Redux store
+    
     const user = useSelector((state) => state.user);
 
-    const tripList = user?.user?.tripList || [];  // Safe access in case user or tripList is not defined
-
+    const tripList = user?.user?.tripList || [];  
+    
     const [properties, setProperties] = useState([]);
 
     const fetchProperty = async (propertyId) => {
