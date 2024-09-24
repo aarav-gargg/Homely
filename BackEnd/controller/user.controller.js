@@ -28,3 +28,11 @@ export const getProperty = async(req,res,next) => {
         next(error);
     }
 }
+
+export const getWishList = async(req,res,next) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
