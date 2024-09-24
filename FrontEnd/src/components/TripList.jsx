@@ -8,44 +8,45 @@ import { setTripList } from '../redux/slice/userSlice';
 const TripList = () => {
     
     const user = useSelector((state) => state.user);
-
-
-    const tripList = user?.user?.tripList || [];  
-    
     const [properties, setProperties] = useState([]);
-
-    const fetchProperty = async (propertyId) => {
-        try {
-            const property = await axios.get(`http://localhost:3000/api/user/property/${propertyId}`);
-            if (property.status === 200) {
-                return property.data;
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
+    
     useEffect(() => {
-        const fetchAllProperties = async () => {
-            const propertyArray = [];
-            for (let i = 0; i < tripList.length; i++) {
-                const property = await fetchProperty(tripList[i].propertyId);
-                if (property) {
-                    const propertyWithTripData = {
-                        ...property,
-                        ...tripList[i],
-                    };
-                    propertyArray.push(propertyWithTripData);
+        const fetchTripList = async () => {
+          try {
+            const trips = await axios.get(`http://localhost:3000/api/user/${user?.user?._id}/trips`);
+      
+            if (trips.status === 200) {
+              console.log("trips", trips.data);
+              const propertyArray = [];
+      
+              for (let i = 0; i < trips.data.length; i++) {
+                const trip = trips.data[i];
+                const { propertyId, startDate, endDate, hostId, totalPrice } = trip;
+      
+                if (propertyId) {
+                  
+                  propertyArray.push({
+                    ...propertyId, 
+                    startDate,      
+                    endDate,        
+                    hostId,         
+                    totalPrice      
+                  });
                 }
+              }
+      
+              setProperties(propertyArray);
+              console.log("Properties with trip details:", propertyArray);
             }
-            setProperties(propertyArray);
+          } catch (error) {
+            console.error("Error fetching trips:", error);
+          }
         };
-
-        if (tripList.length > 0) {
-            fetchAllProperties();
+      
+        if (user?.user?._id) {
+          fetchTripList();
         }
-    }, [tripList]);
-
+      }, [user?.user?._id]);
     
 
     return (
@@ -60,6 +61,7 @@ const TripList = () => {
                 )}
 
                 {properties.map(({ _id, creator, photos, city, state, country, category, type, totalPrice, startDate , endDate,booking= false }) => (
+                    <div className='flex flex-col'>
                     <PropertyCard
                         key={_id}
                         id={_id}
@@ -75,6 +77,7 @@ const TripList = () => {
                         startDate={startDate}
                         endDate={endDate}
                     />
+                    </div>
                 ))}
             </div>
         </div>

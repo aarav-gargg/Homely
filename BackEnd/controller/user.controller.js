@@ -1,5 +1,6 @@
 import BookingSchema from "../models/booking.model.js"
 import Host from "../models/host.model.js";
+import User from "../models/user.model.js"
 import { errorHandler } from "../utils/error.js";
 
 export const getTripList = async (req,res,next) => {
@@ -36,3 +37,4 @@ export const getWishList = async(req,res,next) => {
         
     }
 }
+
