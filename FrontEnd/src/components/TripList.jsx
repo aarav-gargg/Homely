@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropertyCard from './PropertyCard';
+import { setTripList } from '../redux/slice/userSlice';
 
 const TripList = () => {
     
     const user = useSelector((state) => state.user);
+
 
     const tripList = user?.user?.tripList || [];  
     
@@ -44,7 +46,7 @@ const TripList = () => {
         }
     }, [tripList]);
 
-    console.log(properties);
+    
 
     return (
         <div>

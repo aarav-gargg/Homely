@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 // import { a } from 'react-router-dom';
 import { FaSearchLocation } from "react-icons/fa";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { FaUserCircle } from "react-icons/fa";
+import { setLogout } from '../redux/slice/userSlice';
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state?.user);
   console.log(user);
 
   return (
@@ -163,7 +165,7 @@ const Navbar = () => {
               </div>
             </div> */}
             <div className="flex items-center gap-5">
-              {user.user != null && (
+              {user?.user != null && (
                 <NavLink
                   to="listProperty"
                   className="rounded-md px-3 py-2 text-md font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
@@ -197,39 +199,42 @@ const Navbar = () => {
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-300"
                       role="menuitem"
                     >
-                      {user.user.name}
+                      {user?.user?.name}
                     </NavLink>
                     <NavLink
-                      to={`/${user.user._id}/trips`}
+                      to={`/${user?.user?._id}/trips`}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-300"
                       role="menuitem">
                         Trip List
                     </NavLink>
                     <NavLink
-                      to={`/${user.user._id}/wishList`}
+                      to={`/${user?.user?._id}/wishList`}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-300"
                       role="menuitem">
                         Wish List
                     </NavLink>
                     <NavLink
-                      to={`/${user.user._id}/properties`}
+                      to={`/${user?.user?._id}/properties`}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-300"
                       role="menuitem">
                         Property List
                     </NavLink>
                     <NavLink
-                      to={`/${user.user._id}/reservations`}
+                      to={`/${user?.user?._id}/reservations`}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-slate-300"
                       role="menuitem">
                         Reservations List
                     </NavLink>
-                    <NavLink
-                      to="#"
-                      className="block px-4 py-2 text-sm text-gray-700  hover:bg-slate-300"
+                    <button
+                      className="block px-4 py-2 w-full text-sm text-gray-700  hover:bg-slate-300"
                       role="menuitem"
+                      onClick={()=>{
+                        dispatch(setLogout())
+                        toggleDropdown();
+                      }}
                     >
                       Sign out
-                    </NavLink>
+                    </button>
                   </div>
                 )
                 }
