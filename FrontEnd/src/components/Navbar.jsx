@@ -225,7 +225,8 @@ const Navbar = () => {
                       role="menuitem">
                         Reservations List
                     </NavLink>
-                    <button
+                    <NavLink
+                      to="/"
                       className="block px-4 py-2 w-full text-sm text-gray-700  hover:bg-slate-300"
                       role="menuitem"
                       onClick={()=>{
@@ -234,7 +235,7 @@ const Navbar = () => {
                       }}
                     >
                       Sign out
-                    </button>
+                    </NavLink>
                   </div>
                 )
                 }
