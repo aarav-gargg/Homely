@@ -50,10 +50,12 @@ export const getWishList = async (req, res, next) => {
 
 export const addToWishList = async (req, res, next) => {
     try {
-        const { propertyId, userId } = req.body;
+        const { propertyId, userId } = req.params;
+        console.log(propertyId)
         const property = await Host.findById(propertyId);
 
         if (!property) {
+            
             return res.status(404).json({ message: 'Property not found' });
         }
 

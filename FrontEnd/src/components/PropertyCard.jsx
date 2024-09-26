@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
 
 const PropertyCard = ({
   id,
@@ -22,6 +25,8 @@ const PropertyCard = ({
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
+  const user = useSelector((state) => state?.user);
+  const userId = user?.user?._id;
 
   const showPrevSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length)
@@ -29,6 +34,24 @@ const PropertyCard = ({
 
   const showNextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length)
+  }
+
+  const handleWishList = async () => {
+    try {
+      if (!isClicked) {
+        if (user.user === null) {
+          alert("Please login to add to wishlist")
+          navigate('/login')
+        }
+        else {
+          console.log(user);
+          const resp = await axios.get(`http://localhost:3000/api/user/wishList/${userId}/${id}`);
+          if (resp.status == 200) alert("Added to WISHLIST");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -63,6 +86,7 @@ const PropertyCard = ({
                 onClick={(e) => {
                   e.stopPropagation()
                   setIsClicked(!isClicked)
+                  handleWishList()
                 }}
               >
                 {isClicked ? <FaHeart /> : <FaRegHeart />}

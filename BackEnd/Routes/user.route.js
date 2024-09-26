@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/:userId/trips" , getTripList);
 router.get("/property/:propertyId",getProperty)
-router.get("/wishList",addToWishList)
+router.get("/wishList/:userId/:propertyId",addToWishList)
 router.get("/:userId/wishList",getWishList)
 
 export default router;
