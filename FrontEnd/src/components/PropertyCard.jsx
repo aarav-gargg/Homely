@@ -46,7 +46,11 @@ const PropertyCard = ({
         else {
           console.log(user);
           const resp = await axios.get(`http://localhost:3000/api/user/wishList/${userId}/${id}`);
-          if (resp.status == 200) alert("Added to WISHLIST");
+          if (resp.status == 200){
+            alert("Added to WISHLIST");
+            navigate(`/${userId}/wishList`)
+            console.log(user);
+          }
         }
       }
     } catch (error) {
