@@ -15,21 +15,25 @@ const Login = () => {
         try {
             const data = {
                 email,
-                password
+                password,
             };
+    
             const response = await axios.post("http://localhost:3000/api/auth/Login", data);
+            
             if (response.status === 200) {
                 const { user, token } = response.data;
                 dispatch(setLogin({ user, token }));
                 navigate("/");
             }
-            else{
-                alert("Invalid email or password");
-            }
         } catch (error) {
-            console.log(error);
+            if (error.response && error.response.status === 409) {
+                alert("Invalid email or password");
+            } else {
+                console.log(error);
+            }
         }
     };
+    
 
     return (
         <div className='bg-fav-color min-h-screen w-screen flex'>
