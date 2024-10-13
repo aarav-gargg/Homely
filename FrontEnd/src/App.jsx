@@ -11,6 +11,7 @@ import Property from './components/Property';
 import Footer from './components/Footer';
 import TripList from './components/TripList';
 import WishList from './components/WishList';
+import PropertyList from './components/PropertyList';
 
 function AppLayout() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/properties/:propertyId" element={<Property/>}/>
         <Route path="/:userId/trips" element={<TripList/>}/>
         <Route path="/:userId/wishList" element={<WishList/>}/>
+        <Route path="/:userId/properties" element={<PropertyList/>}/>
       </Route>
     )
   );

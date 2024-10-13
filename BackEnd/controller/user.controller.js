@@ -7,12 +7,14 @@ export const getTripList = async (req, res, next) => {
     try {
         const { userId } = req.params;
 
-        const trips = await BookingSchema.find({ customerId: userId }).populate("customerId hostId propertyId");
 
-        if (!trips) return next(errorHandler("404", "Booking Not Found"));
+        const user = await User.findById(userId).populate('tripList');
 
-        res.status(200).json(trips);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
+        res.status(200).json(user.tripList);
     } catch (error) {
         next(error);
     }
@@ -136,6 +138,23 @@ export const addToPropertyList = async (req, res, next) => {
         const updatedUser = await User.findById(userId);
         res.status(200).json(updatedUser);
 
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const getPropertyList = async (req,res,next) => {
+    try {
+        const { userId } = req.params;
+
+
+        const user = await User.findById(userId).populate('propertyList');
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json(user.propertyList);
     } catch (error) {
         next(error);
     }
