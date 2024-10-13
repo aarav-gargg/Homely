@@ -126,8 +126,11 @@ const Host = () => {
 
       const response = await axios.post("http://localhost:3000/api/host/create", hostData);
       if (response.status == 201) {
-        alert("Property Has Been Hosted Successfully");
-        navigate("/");
+        const resp = await axios.get(`http://localhost:3000/api/user/propertyList/${user.user._id}`);
+        if(resp.status==200){
+          alert("Property Has Been Hosted Successfully");
+          navigate("/");
+        }
       }
       else {
         alert("Failed to Host Property");

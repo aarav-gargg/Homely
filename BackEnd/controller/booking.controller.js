@@ -1,9 +1,14 @@
 import BookingSchema from "../models/booking.model.js"
 import User from "../models/user.model.js"
+import Host from "../models/user.model.js"
 
 export const createBooking = async (req, res, next) => {
     try {
         const { customerId, hostId, propertyId, startDate, endDate, totalPrice } = req.body;
+
+        if(hostId == customerId){
+            return res.status(400).json({ message: "You cannot book your own property" })
+        }
 
         const booking = new BookingSchema({
             customerId, hostId, propertyId, startDate, endDate, totalPrice

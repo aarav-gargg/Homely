@@ -8,7 +8,6 @@ export const hostProperty = async (req, res, next) => {
 
         const photos = req.files;
 
-        // Check if photos were uploaded
         if (!photos || photos.length === 0) {
             return next(errorHandler(400, "No files uploaded"));
         }
@@ -37,6 +36,8 @@ export const hostProperty = async (req, res, next) => {
         });
 
         await hostedProperty.save();
+
+
 
         res.status(201).json(hostedProperty);
     } catch (error) {

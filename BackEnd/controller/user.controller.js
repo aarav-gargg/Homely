@@ -3,24 +3,24 @@ import Host from "../models/host.model.js";
 import User from "../models/user.model.js"
 import { errorHandler } from "../utils/error.js";
 
-export const getTripList = async (req,res,next) => {
+export const getTripList = async (req, res, next) => {
     try {
-        const {userId} = req.params;
+        const { userId } = req.params;
 
-        const trips = await BookingSchema.find({customerId: userId}).populate("customerId hostId propertyId");
+        const trips = await BookingSchema.find({ customerId: userId }).populate("customerId hostId propertyId");
 
-        if(!trips) return next(errorHandler("404" , "Booking Not Found"));
+        if (!trips) return next(errorHandler("404", "Booking Not Found"));
 
         res.status(200).json(trips);
-        
+
     } catch (error) {
         next(error);
     }
 }
 
-export const getProperty = async(req,res,next) => {
+export const getProperty = async (req, res, next) => {
     try {
-        const {propertyId} = req.params;
+        const { propertyId } = req.params;
 
         const property = await Host.findById(propertyId);
 
@@ -32,10 +32,10 @@ export const getProperty = async(req,res,next) => {
 
 export const getWishList = async (req, res, next) => {
     try {
-        const { userId } = req.params; 
+        const { userId } = req.params;
 
-       
-        const user = await User.findById(userId).populate('wishList'); 
+
+        const user = await User.findById(userId).populate('wishList');
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -47,7 +47,6 @@ export const getWishList = async (req, res, next) => {
     }
 };
 
-
 export const addToWishList = async (req, res, next) => {
     try {
         const { propertyId, userId } = req.params;
@@ -55,7 +54,7 @@ export const addToWishList = async (req, res, next) => {
         const property = await Host.findById(propertyId);
 
         if (!property) {
-            
+
             return res.status(404).json({ message: 'Property not found' });
         }
 
@@ -72,10 +71,10 @@ export const addToWishList = async (req, res, next) => {
         if (isPropertyInWishList) {
             return res.status(400).json({ message: 'Property already in wishlist' });
         }
- 
+
         await User.updateOne(
             { _id: userId },
-            { $push: { wishList: property } }  
+            { $push: { wishList: property } }
         );
 
         const updatedUser = await User.findById(userId);
@@ -89,7 +88,7 @@ export const deleteFromWishList = async (req, res, next) => {
     try {
         const { userId, propertyId } = req.params;
 
-        
+
         const user = await User.findById(userId);
 
         if (!user) {
@@ -104,7 +103,7 @@ export const deleteFromWishList = async (req, res, next) => {
             return res.status(400).json({ message: 'Property not found in wishlist' });
         }
 
-        
+
         user.wishList.splice(propertyIndex, 1);
 
         await user.save();
@@ -114,6 +113,52 @@ export const deleteFromWishList = async (req, res, next) => {
         next(error);
     }
 };
+
+export const addToPropertyList = async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const properties = await Host.find({ creator: userId });
+
+        for (const property of properties) {
+            await User.updateOne(
+                { _id: userId },
+                { $push: { propertyList: property } }
+            );
+        }
+
+        const updatedUser = await User.findById(userId);
+        res.status(200).json(updatedUser);
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const clear = async (req,res,next) => {
+   try {
+    const { userId } = req.params;
+
+    await User.updateOne(
+        { _id: userId },
+        { tripList: []} 
+    );
+
+    const updated = await User.findById(userId);
+    res.status(200).json(updated);
+
+   } catch (error) {
+    
+   }
+}
+
+
 
 
 
