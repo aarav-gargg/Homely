@@ -7,14 +7,12 @@ export const getTripList = async (req, res, next) => {
     try {
         const { userId } = req.params;
 
+        const trips = await BookingSchema.find({ customerId: userId }).populate("customerId hostId propertyId");
 
-        const user = await User.findById(userId).populate('tripList');
+        if (!trips) return next(errorHandler("404", "Booking Not Found"));
 
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
+        res.status(200).json(trips);
 
-        res.status(200).json(user.tripList);
     } catch (error) {
         next(error);
     }
