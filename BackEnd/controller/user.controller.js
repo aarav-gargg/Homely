@@ -85,9 +85,9 @@ export const addToWishList = async (req, res, next) => {
     }
 };
 
-export const clearWishList = async (req, res, next) => {
+export const deleteFromWishList = async (req, res, next) => {
     try {
-        const { userId } = req.body;
+        const { userId, propertyId } = req.params;
 
         
         const user = await User.findById(userId);
@@ -96,17 +96,24 @@ export const clearWishList = async (req, res, next) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-      
-        await User.updateOne(
-            { _id: userId },
-            { $set: { wishList: [] } }
+        const propertyIndex = user.wishList.findIndex(
+            (wishlistItem) => wishlistItem._id.toString() === propertyId
         );
 
-        const updatedUser = await User.findById(userId);
-        res.status(200).json({ message: 'WishList cleared', user: updatedUser });
+        if (propertyIndex === -1) {
+            return res.status(400).json({ message: 'Property not found in wishlist' });
+        }
+
+        
+        user.wishList.splice(propertyIndex, 1);
+
+        await user.save();
+
+        res.status(200).json({ message: 'Property removed from wishlist', user: user });
     } catch (error) {
         next(error);
     }
 };
+
 
 
