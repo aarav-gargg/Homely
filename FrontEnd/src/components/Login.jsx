@@ -23,6 +23,9 @@ const Login = () => {
                 dispatch(setLogin({ user, token }));
                 navigate("/");
             }
+            else{
+                alert("Invalid email or password");
+            }
         } catch (error) {
             console.log(error);
         }
