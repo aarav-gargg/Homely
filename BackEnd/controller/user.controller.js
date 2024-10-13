@@ -173,7 +173,7 @@ export const clear = async (req,res,next) => {
     res.status(200).json(updated);
 
    } catch (error) {
-    
+      next(error);
    }
 }
 
