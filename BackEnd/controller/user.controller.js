@@ -205,6 +205,21 @@ export const clear = async (req, res, next) => {
        next(error);
     }
  }
+
+ export const getReservationsList = async (req, res , next) => {
+    try {
+        const { userId } = req.params;
+
+        const reservations = await BookingSchema.find({ hostId: userId }).populate("customerId hostId propertyId");
+
+        if (!reservations) return next(errorHandler("404", "Booking Not Found"));
+
+        res.status(200).json(reservations);
+
+    } catch (error) {
+        next(error);
+    }
+ }
  
 
 

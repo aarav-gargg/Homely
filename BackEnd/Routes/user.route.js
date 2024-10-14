@@ -1,5 +1,5 @@
 import express from "express";
-import { getTripList , getProperty , addToWishList , deleteFromWishList , getWishList , addToPropertyList , clear , getPropertyList} from "../controller/user.controller.js";
+import { getTripList , getProperty , addToWishList , deleteFromWishList , getWishList , addToPropertyList , clear , getPropertyList , getReservationsList} from "../controller/user.controller.js";
 
 const router = express.Router();
 
@@ -10,6 +10,7 @@ router.get("/:userId/wishList",getWishList)
 router.patch("/wishlist/delete/:userId/:propertyId" , deleteFromWishList)
 router.get("/propertyList/:userId" , addToPropertyList)
 router.get("/properties/:userId", getPropertyList )
-router.delete("/clear/:userId",clear);
+router.delete("/clear/:userId",clear)
+router.get("/:userId/reservations" , getReservationsList)
 
 export default router;
