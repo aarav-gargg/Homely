@@ -27,6 +27,7 @@ const Login = () => {
             }
         } catch (error) {
             if (error.response && error.response.status === 409) {
+                console.log(error);
                 alert("Invalid email or password");
             } else {
                 console.log(error);
