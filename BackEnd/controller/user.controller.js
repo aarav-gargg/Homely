@@ -118,28 +118,47 @@ export const addToPropertyList = async (req, res, next) => {
     try {
         const { userId } = req.params;
 
+        // Find the user by ID
         const user = await User.findById(userId);
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        // Fetch the properties hosted by the user
         const properties = await Host.find({ creator: userId });
 
-        for (const property of properties) {
-            await User.updateOne(
-                { _id: userId },
-                { $push: { propertyList: property } }
-            );
+        if (properties.length === 0) {
+            return res.status(404).json({ message: 'No properties found for this user' });
         }
 
-        const updatedUser = await User.findById(userId);
+        await User.updateOne(
+            { _id: userId },
+            { $set: { propertyList: [] } }  // Clear the list first
+        );
+
+        await User.updateOne(
+            { _id: userId },
+            { $push: { propertyList: { $each: properties } } }  // Push the properties to the list
+        );
+
+        // Fetch the updated user with the new property list
+        const updatedUser = await User.findById(userId).populate({
+            path: 'propertyList',
+            populate: {
+                path: 'creator',
+                select: 'name email'  // Optional: populate creator info for the properties
+            }
+        });
+
+        // Return the updated user object with the property list
         res.status(200).json(updatedUser);
 
     } catch (error) {
         next(error);
     }
-}
+};
+
 
 export const getPropertyList = async (req,res,next) => {
     try {
@@ -158,22 +177,35 @@ export const getPropertyList = async (req,res,next) => {
     }
 }
 
-export const clear = async (req,res,next) => {
-   try {
-    const { userId } = req.params;
-
-    await User.updateOne(
-        { _id: userId },
-        { tripList: []} 
-    );
-
-    const updated = await User.findById(userId);
-    res.status(200).json(updated);
-
-   } catch (error) {
-      next(error);
-   }
-}
+export const clear = async (req, res, next) => {
+    try {
+       const { userId } = req.params;
+ 
+    
+       const user = await User.findById(userId);
+ 
+       if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+       }
+ 
+       
+       const updatedPropertyList = user.propertyList.length > 1 ? [user.propertyList[0]] : user.propertyList;
+ 
+       
+       await User.updateOne(
+          { _id: userId },
+          { $set: { propertyList: updatedPropertyList } }
+       );
+ 
+       const updated = await User.findById(userId);
+ 
+       res.status(200).json(updated);
+ 
+    } catch (error) {
+       next(error);
+    }
+ }
+ 
 
 
 

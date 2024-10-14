@@ -1,4 +1,5 @@
 import Host from "../models/host.model.js";
+import User from "../models/user.model.js";
 import {errorHandler} from "../utils/error.js"
 
 
@@ -36,8 +37,6 @@ export const hostProperty = async (req, res, next) => {
         });
 
         await hostedProperty.save();
-
-
 
         res.status(201).json(hostedProperty);
     } catch (error) {

@@ -87,6 +87,7 @@ const Property = () => {
     
       if (resp.status === 200) {
         alert("PROPERTY HAS BEEN BOOKED");
+        navigate(`/${user.user._id}/trips`)
       } else {
         alert(resp);
       }

@@ -138,7 +138,6 @@ const Host = () => {
 
     } catch (error) {
       console.log(error);
-      alert(error);
     }
   }
 
