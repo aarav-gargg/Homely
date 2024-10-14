@@ -68,34 +68,42 @@ const Property = () => {
     setDateRange([ranges.selection]);
   };
 
-  const handleBooking = async ()=>{
+  const handleBooking = async () => {
 
-    if(user.user==null){
+    if (user.user == null) {
       alert("Please login to book any property");
       navigate("/login");
     }
-     const data = {
+    const data = {
       "startDate": dateRange[0].startDate.toISOString(),
       "endDate": dateRange[0].endDate.toISOString(),
       "customerId": user.user._id,
       "propertyId": propertyId,
-      "hostId" : fetchedProperty.creator._id,
-      "totalPrice" : fetchedProperty.price * dayCount
-     }
+      "hostId": fetchedProperty.creator._id,
+      "totalPrice": fetchedProperty.price * dayCount
+    }
     try {
-      const resp = await axios.post("http://localhost:3000/api/booking/create" , data);
-      if(resp.status==200){
+      const resp = await axios.post("http://localhost:3000/api/booking/create", data);
+    
+      if (resp.status === 200) {
         alert("PROPERTY HAS BEEN BOOKED");
-      }
-      else{
+      } else {
         alert(resp);
       }
-
+    
     } catch (error) {
-       console.log(error);
-       alert(error);
+      if (error.response && error.response.status === 409) {
+        alert("YOU CANNOT BOOK YOUR OWN PROPERTY");
+      } 
+      else if (error.response && error.response.status === 400) {
+        alert("PROPERTY IS ALREADY BOOKED FOR THESE DATES");
+      } 
+      else {
+        console.error("An unknown error occurred:", error);
+        alert("An unexpected error occurred.");
+      }
     }
-     
+    
   }
 
   const start = new Date(dateRange[0].startDate);
@@ -218,7 +226,7 @@ const Property = () => {
         </div>
       </div>
       <div className="flex flex-col md:flex-row  rounded-lg shadow-md p-4">
-       
+
         <div className="w-full md:w-5/12 my-5 mx-4 md:mx-11 flex flex-col">
           <h2 className="text-2xl font-semibold font-yusei my-2">Complete Address</h2>
           <div className="w-full md:w-5/6 mx-4 md:mx-0 my-2 p-4 border-t-4 border-b-4 rounded-md shadow-sm font-bold font-poppins ">
@@ -228,7 +236,7 @@ const Property = () => {
           <div className="mx-auto my-4">
             <h2 className="text-2xl font-semibold font-yusei my-2">Trip Details</h2>
             <h2 className="mb-2.5 text-lg font-semibold">
-              ₹{fetchedProperty.price} X {dayCount > 1 ? `${dayCount} nights` : `${dayCount=1} night`}
+              ₹{fetchedProperty.price} X {dayCount > 1 ? `${dayCount} nights` : `${dayCount = 1} night`}
             </h2>
             <h2 className="mb-2.5 text-lg font-semibold">
               Total price: ₹{fetchedProperty.price * dayCount}
@@ -240,15 +248,15 @@ const Property = () => {
               End Date: <span className='text-white font-semibold'>{dateRange[0].endDate.toDateString()}</span>
             </h3>
             <button className="w-full mt-7 sm:max-w-[300px] py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
-            onClick={handleBooking}
-            type='submit'
+              onClick={handleBooking}
+              type='submit'
             >
               Book
             </button>
           </div>
         </div>
 
-        
+
         <div className="w-full md:w-7/12 my-5 mx-11 md:mx-11 px-4 md:px-11 flex flex-col rounded-lg shadow-sm">
           <div className="justify-center items-center  font-yusei mx-11  md:mx-11 px-11 md:px-0">
             <h2 className="text-2xl font-semibold font-yusei my-2">How long do you want to stay</h2>
