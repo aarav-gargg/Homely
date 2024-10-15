@@ -103,6 +103,7 @@ const Property = () => {
         console.error("An unknown error occurred:", error);
         alert("An unexpected error occurred.");
       }
+      location.reload();
     }
     
   }
