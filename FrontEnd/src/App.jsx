@@ -13,6 +13,7 @@ import TripList from './components/TripList';
 import WishList from './components/WishList';
 import PropertyList from './components/PropertyList';
 import Reservations from './components/Reservations';
+import About from './components/About';
 
 function AppLayout() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/:userId/wishList" element={<WishList/>}/>
         <Route path="/:userId/properties" element={<PropertyList/>}/>
         <Route path="/:userId/reservations" element={<Reservations/>}/>
+        <Route path="/about" element={<About/>}/>
       </Route>
     )
   );
